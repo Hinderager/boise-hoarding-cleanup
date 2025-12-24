@@ -6,28 +6,28 @@ const services = [
     title: 'Hoarding Cleanup',
     description: 'Professional hoarding cleanup with compassion and respect. We understand the emotional challenges involved and work at your pace. Our team carefully sorts through belongings, helps identify valuables and keepsakes, and removes unwanted items. We never throw anything away without your approval.',
     image: '/generated/hoarding-cleanup.webp',
-    link: 'tel:2085059352',
+    link: 'tel:2089435231',
     buttonText: 'Call Now',
   },
   {
     title: 'Ongoing Maintenance',
     description: 'Recovery from hoarding is a journey, not a one-time event. We offer ongoing maintenance visits to help you stay on track. Whether it\'s weekly, monthly, or as-needed check-ins, we\'ll help prevent re-accumulation and keep your space comfortable and safe.',
     image: '/generated/ongoing-maintenance.webp',
-    link: 'tel:2085059352',
+    link: 'tel:2089435231',
     buttonText: 'Call Now',
   },
   {
     title: 'Deep Cleaning',
     description: 'After the clutter is removed, we deep clean and sanitize the entire space. Floors, walls, surfaces—everything gets attention. We address odors, stains, and years of accumulated grime to make the space livable and comfortable again. Perfect preparation for selling or moving back in.',
     image: '/generated/deep-cleaning.webp',
-    link: 'tel:2085059352',
+    link: 'tel:2089435231',
     buttonText: 'Call Now',
   },
   {
     title: 'Emergency Services',
     description: 'Facing an eviction, code violation, or urgent deadline? We offer expedited hoarding cleanup services when you need them fast. Same-day and next-day service available for emergency situations. We understand time-sensitive situations and work quickly without sacrificing quality.',
     image: '/generated/emergency-services.webp',
-    link: 'tel:2085059352',
+    link: 'tel:2089435231',
     buttonText: 'Call Now',
   },
 ]
@@ -96,9 +96,9 @@ export function ServicesShowcase() {
         {/* CTA Buttons */}
         <div className="flex flex-row gap-4 justify-center mt-16">
           <Button asChild size="lg" className="bg-ub-yellow hover:bg-ub-yellow/90 text-black font-bold text-lg px-10 py-6 rounded-lg uppercase border-4 border-ub-yellow">
-            <a href="tel:2085059352">
+            <a href="tel:2089435231">
               <span className="md:hidden">Call Now</span>
-              <span className="hidden md:inline">(208) 505-9352</span>
+              <span className="hidden md:inline">(208) 943-5231</span>
             </a>
           </Button>
         </div>

@@ -107,7 +107,7 @@ export default function PrivacyPage() {
               If you have questions about this Privacy Policy or our privacy practices, please contact us:
             </p>
             <ul>
-              <li><strong>Phone:</strong> (208) 505-9352</li>
+              <li><strong>Phone:</strong> (208) 943-5231</li>
               <li><strong>Email:</strong> info@boise-hoarding-cleanup.com</li>
             </ul>
           </div>

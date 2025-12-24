@@ -259,10 +259,10 @@ export default function UnderstandingHoardingDisorder() {
               We provide compassionate hoarding cleanup throughout Boise, Meridian, Nampa, and the Treasure Valley. We understand the condition and work respectfully.
             </p>
             <a
-              href="tel:2085059352"
+              href="tel:2089435231"
               className="inline-block bg-dark-blue hover:bg-light-blue text-white font-bold text-lg px-8 py-4 rounded-lg transition-colors"
             >
-              Call (208) 505-9352
+              Call (208) 943-5231
             </a>
           </div>
         </div>

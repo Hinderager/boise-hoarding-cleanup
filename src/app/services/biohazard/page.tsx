@@ -3,7 +3,7 @@ import { Phone, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Biohazard Cleanup Boise | Safe Contamination Removal',
-  description: 'Professional biohazard cleanup for hoarding situations in Boise. Certified, safe removal of contaminated materials. Call (208) 505-9352.',
+  description: 'Professional biohazard cleanup for hoarding situations in Boise. Certified, safe removal of contaminated materials. Call (208) 943-5231.',
   alternates: { canonical: 'https://boise-hoarding-cleanup.com/services/biohazard' },
 }
 
@@ -77,11 +77,11 @@ export default function BiohazardPage() {
             <h3 className="text-2xl font-bold text-white mb-4">Need Biohazard Cleanup?</h3>
             <p className="text-gray-300 mb-6">We handle these situations discreetly and professionally. Call us for immediate assistance.</p>
             <a
-              href="tel:2085059352"
+              href="tel:2089435231"
               className="inline-flex items-center gap-2 bg-brand-yellow text-dark-blue px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-400 transition-colors"
             >
               <Phone className="w-5 h-5" />
-              (208) 505-9352
+              (208) 943-5231
             </a>
           </div>
         </div>

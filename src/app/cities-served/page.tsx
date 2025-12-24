@@ -4,7 +4,7 @@ import { MapPin } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Service Areas | Boise Hoarding Cleanup',
-  description: 'Professional hoarding cleanup serving Boise, Meridian, Nampa, Caldwell, Eagle, and the Treasure Valley. Compassionate, judgment-free service. Call (208) 505-9352.',
+  description: 'Professional hoarding cleanup serving Boise, Meridian, Nampa, Caldwell, Eagle, and the Treasure Valley. Compassionate, judgment-free service. Call (208) 943-5231.',
   alternates: { canonical: 'https://boise-hoarding-cleanup.com/cities-served' },
 }
 

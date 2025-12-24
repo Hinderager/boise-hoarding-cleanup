@@ -27,7 +27,7 @@ const faqData = [
   },
   {
     question: 'Do you offer same-day or emergency hoarding cleanup?',
-    answer: 'Yes, we offer same-day and emergency services throughout the Treasure Valley. If you need immediate help due to health, safety, or legal concerns, call us at (208) 505-9352.',
+    answer: 'Yes, we offer same-day and emergency services throughout the Treasure Valley. If you need immediate help due to health, safety, or legal concerns, call us at (208) 943-5231.',
   },
   {
     question: 'What areas do you serve?',
@@ -52,7 +52,7 @@ export function StructuredData({ city = 'Boise' }: { city?: string }) {
     "name": `Boise Hoarding Cleanup - ${city}`,
     "description": `Professional hoarding cleanup services in ${city}, Idaho. Compassionate, discreet cleanup for hoarder homes. Licensed and insured.`,
     "url": "https://boise-hoarding-cleanup.com",
-    "telephone": "+1-208-505-9352",
+    "telephone": "+1-208-943-5231",
     "email": "info@boise-hoarding-cleanup.com",
     "address": {
       "@type": "PostalAddress",

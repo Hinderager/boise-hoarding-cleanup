@@ -3,7 +3,7 @@ import { Phone, CheckCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Residential Hoarding Cleanup Boise | Compassionate Home Cleanup',
-  description: 'Professional residential hoarding cleanup in Boise. We understand hoarding disorder and treat your home and family with respect. Judgment-free service. Call (208) 505-9352.',
+  description: 'Professional residential hoarding cleanup in Boise. We understand hoarding disorder and treat your home and family with respect. Judgment-free service. Call (208) 943-5231.',
   alternates: { canonical: 'https://boise-hoarding-cleanup.com/services/residential' },
 }
 
@@ -91,11 +91,11 @@ export default function ResidentialPage() {
               We're here to help, not judge. Call us for a confidential conversation about how we can help you or your loved one.
             </p>
             <a
-              href="tel:2085059352"
+              href="tel:2089435231"
               className="inline-flex items-center gap-2 bg-brand-yellow text-dark-blue px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-400 transition-colors"
             >
               <Phone className="w-5 h-5" />
-              (208) 505-9352
+              (208) 943-5231
             </a>
           </div>
         </div>

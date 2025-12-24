@@ -73,8 +73,8 @@ export function ServiceAreas() {
         <div className="mt-10 text-center">
           <p className="text-gray-600">
             Don&apos;t see your city listed? We likely serve your area too!{' '}
-            <a href="tel:2085059352" className="text-dark-blue font-bold underline hover:text-light-blue">
-              Call (208) 505-9352
+            <a href="tel:2089435231" className="text-dark-blue font-bold underline hover:text-light-blue">
+              Call (208) 943-5231
             </a>
             {' '}to confirm service availability.
           </p>

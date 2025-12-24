@@ -4,7 +4,7 @@ import { ArrowRight, Home, Building2, Droplet, Briefcase } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Services Boise | Professional Cleanup',
-  description: 'Compassionate hoarding cleanup services in Boise, Idaho. Residential, commercial, biohazard, and estate cleanup. Judgment-free service. Call (208) 505-9352.',
+  description: 'Compassionate hoarding cleanup services in Boise, Idaho. Residential, commercial, biohazard, and estate cleanup. Judgment-free service. Call (208) 943-5231.',
   alternates: { canonical: 'https://boise-hoarding-cleanup.com/services' },
 }
 

@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Clock, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Contact Us | Boise Hoarding Cleanup',
-  description: 'Contact us for compassionate hoarding cleanup in Boise and the Treasure Valley. Confidential, judgment-free service. Call (208) 505-9352.',
+  description: 'Contact us for compassionate hoarding cleanup in Boise and the Treasure Valley. Confidential, judgment-free service. Call (208) 943-5231.',
   alternates: { canonical: 'https://boise-hoarding-cleanup.com/contact' },
 }
 
@@ -37,7 +37,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-gunmetal mb-1">Phone</h3>
-                  <a href="tel:2085059352" className="text-light-blue text-lg font-semibold hover:underline">(208) 505-9352</a>
+                  <a href="tel:2089435231" className="text-light-blue text-lg font-semibold hover:underline">(208) 943-5231</a>
                   <p className="text-sm text-gray-600 mt-1">Call or text anytime</p>
                 </div>
               </div>
@@ -99,11 +99,11 @@ export default function ContactPage() {
             <h3 className="text-2xl font-bold text-white mb-4">Ready to Talk?</h3>
             <p className="text-gray-300 mb-6">The hardest part is making the call. We'll make everything else easier.</p>
             <a
-              href="tel:2085059352"
+              href="tel:2089435231"
               className="inline-flex items-center gap-2 bg-brand-yellow text-dark-blue px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-400 transition-colors"
             >
               <Phone className="w-5 h-5" />
-              (208) 505-9352
+              (208) 943-5231
             </a>
           </div>
         </div>

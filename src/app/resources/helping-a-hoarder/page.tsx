@@ -261,11 +261,11 @@ export default function HelpingAHoarderPage() {
               We work with families in Boise and the Treasure Valley. We can help with the cleanup while treating your loved one with respect. Give us a call.
             </p>
             <a
-              href="tel:2085059352"
+              href="tel:2089435231"
               className="inline-flex items-center gap-2 bg-brand-yellow text-dark-blue px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-400 transition-colors"
             >
               <Phone className="w-5 h-5" />
-              (208) 505-9352
+              (208) 943-5231
             </a>
           </div>
         </div>

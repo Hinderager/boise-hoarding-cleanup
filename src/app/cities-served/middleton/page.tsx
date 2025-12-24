@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Middleton Idaho | Professional Hoarder Cleanout',
-  description: 'Professional hoarding cleanup services in Middleton, Idaho. Compassionate hoarder cleanout and clutter removal. Licensed & insured. Same-day service available. Call (208) 505-9352.',
+  description: 'Professional hoarding cleanup services in Middleton, Idaho. Compassionate hoarder cleanout and clutter removal. Licensed & insured. Same-day service available. Call (208) 943-5231.',
   keywords: [
     'hoarding cleanup Middleton',
     'hoarding cleanup Middleton Idaho',
@@ -117,11 +117,11 @@ export default function MiddletonPage() {
                 Give us a call. We'll talk through your situation and give you a free estimate.
               </p>
               <a
-                href="tel:2085059352"
+                href="tel:2089435231"
                 className="inline-flex items-center gap-2 bg-brand-yellow text-dark-blue px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-400 transition-colors"
               >
                 <Phone className="w-5 h-5" />
-                (208) 505-9352
+                (208) 943-5231
               </a>
             </div>
           </div>
