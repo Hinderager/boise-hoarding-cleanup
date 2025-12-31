@@ -13,8 +13,8 @@ const services = [
   },
   {
     icon: Sparkles,
-    title: 'Extreme Cleaning',
-    description: 'After clutter removal, we deep clean and sanitize the space so it feels livable again. We handle even the toughest situations.',
+    title: 'Thorough Cleaning',
+    description: 'We go beyond clutter removal with a basic cleanup—sweeping, clearing fridges, and emptying cupboards—helping make the space usable again, even in difficult situations.',
   },
   {
     icon: Package,
@@ -33,8 +33,8 @@ const services = [
   },
   {
     icon: Users,
-    title: 'Organization Help',
-    description: "We'll help you create systems to maintain your space after the cleanup. Our goal is to set you up for long-term success.",
+    title: 'Financing Available',
+    description: "We offer flexible financing options to help make our services more affordable. Our team is happy to explain available options so cost doesn't become an added burden.",
   },
 ]
 

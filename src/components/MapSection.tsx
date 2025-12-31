@@ -58,8 +58,8 @@ export function MapSection() {
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
-                <a href="mailto:info@boise-hoarding-cleanup.com" className="text-[#0b7fb6] hover:text-[#10477d] transition-colors">
-                  info@boise-hoarding-cleanup.com
+                <a href="mailto:info@topshelfpros.com" className="text-[#0b7fb6] hover:text-[#10477d] transition-colors">
+                  info@topshelfpros.com
                 </a>
               </div>
             </div>

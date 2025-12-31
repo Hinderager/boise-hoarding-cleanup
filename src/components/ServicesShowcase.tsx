@@ -17,8 +17,8 @@ const services = [
     buttonText: 'Call Now',
   },
   {
-    title: 'Deep Cleaning',
-    description: 'After the clutter is removed, we deep clean and sanitize the entire space. Floors, walls, surfaces—everything gets attention. We address odors, stains, and years of accumulated grime to make the space livable and comfortable again. Perfect preparation for selling or moving back in.',
+    title: 'No Job Too Large',
+    description: 'There\'s no job too large for us to handle. From overwhelming cleanouts to full property removals, our team is prepared to manage even the most challenging situations. No matter the size, we work efficiently and respectfully to help restore the space.',
     image: '/generated/deep-cleaning.webp',
     link: 'tel:2089435231',
     buttonText: 'Call Now',

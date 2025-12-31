@@ -2,7 +2,7 @@
 
 ## Contact Information Updated
 - **Phone**: (208) 505-9352
-- **Email**: info@boise-hoarding-cleanup.com
+- **Email**: info@topshelfpros.com
 - **Domain**: boise-hoarding-cleanup.com
 
 ## Brand Identity

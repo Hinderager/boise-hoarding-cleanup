@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ResourcesPage() {
   return (
-    <main className="py-16">
+    <main className="pt-20">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-gunmetal mb-6">Resources</h1>
         <p className="text-xl text-gray-600 mb-12">Helpful information about hoarding and the cleanup process.</p>

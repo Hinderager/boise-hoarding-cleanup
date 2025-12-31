@@ -39,11 +39,11 @@ export function Footer() {
             <h4 className="text-xl font-bold mb-4 text-light-blue">Services</h4>
             <ul className="space-y-2">
               <li className="text-white/80">Hoarding Cleanup</li>
-              <li className="text-white/80">Extreme Cleaning</li>
+              <li className="text-white/80">Thorough Cleaning</li>
               <li className="text-white/80">Clutter Removal</li>
               <li className="text-white/80">Compassionate Cleanout</li>
               <li className="text-white/80">Biohazard Cleaning</li>
-              <li className="text-white/80">Organization Help</li>
+              <li className="text-white/80">Financing Available</li>
             </ul>
           </div>
 
@@ -99,10 +99,10 @@ export function Footer() {
                 <Mail className="h-5 w-5 text-[#ff6b35] flex-shrink-0 mt-1" />
                 <div>
                   <a
-                    href="mailto:info@boise-hoarding-cleanup.com"
+                    href="mailto:info@topshelfpros.com"
                     className="text-white/80 hover:text-white transition-colors"
                   >
-                    info@boise-hoarding-cleanup.com
+                    info@topshelfpros.com
                   </a>
                 </div>
               </li>

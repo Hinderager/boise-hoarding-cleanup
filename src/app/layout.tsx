@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     'hoarding remediation Treasure Valley',
     'compassionate hoarding cleanup',
     'clutter removal services Idaho',
-    'extreme cleaning services Boise',
+    'thorough cleaning services Boise',
     'hoarder house cleanup',
   ],
   authors: [{ name: 'Boise Hoarding Cleanup' }],

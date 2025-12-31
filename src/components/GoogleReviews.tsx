@@ -5,56 +5,12 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
 
-// Static reviews for hoarding cleanup
+// Static reviews
 const staticReviews = [
-  {
-    author: 'Sarah M.',
-    relative_time: '2 months ago',
-    rating: 5,
-    text: 'I cannot say enough good things about this team. My mother had been struggling with hoarding for years, and they treated her with such kindness and respect. They worked at her pace and never made her feel judged. The house looks amazing now.',
-  },
-  {
-    author: 'David R.',
-    relative_time: '1 month ago',
-    rating: 5,
-    text: 'Professional, compassionate, and thorough. They helped us clean out my late father\'s home which had become severely cluttered over the years. They found important documents and keepsakes we would have missed. Highly recommend.',
-  },
-  {
-    author: 'Jennifer K.',
-    relative_time: '3 weeks ago',
-    rating: 5,
-    text: 'We were facing an eviction deadline and these guys came through in a big way. They worked quickly but carefully, sorting through everything and making sure nothing important was thrown away. Saved us from a very stressful situation.',
-  },
-  {
-    author: 'Michael T.',
-    relative_time: '2 weeks ago',
-    rating: 5,
-    text: 'The discretion was what I appreciated most. They used unmarked trucks and were very respectful of our privacy. My sister was embarrassed about her situation, but the team made her feel comfortable and supported throughout the process.',
-  },
-  {
-    author: 'Lisa H.',
-    relative_time: '1 month ago',
-    rating: 5,
-    text: 'From the first phone call to the final walkthrough, everything was handled professionally. They gave us a fair estimate and stuck to it. The deep cleaning after the removal was exceptional. Our home feels like a home again.',
-  },
-  {
-    author: 'Robert B.',
-    relative_time: '3 months ago',
-    rating: 5,
-    text: 'After my wife passed, I let things get out of control. These folks helped me reclaim my space without judgment. They donated what they could and recycled responsibly. I\'m grateful for their help during a difficult time.',
-  },
-  {
-    author: 'Amanda C.',
-    relative_time: '2 months ago',
-    rating: 5,
-    text: 'We hired them for an estate cleanout after inheriting a property. The previous owner had collected things for decades. They handled everything efficiently and even found some valuable items we didn\'t know existed.',
-  },
-  {
-    author: 'James W.',
-    relative_time: '1 week ago',
-    rating: 5,
-    text: 'Same-day service when we had a code violation deadline. They mobilized quickly, worked hard, and got the job done. The inspector was impressed with how clean everything looked. These guys are lifesavers.',
-  },
+  { author: 'Rachelle Tridle', rating: 5, text: 'Top Shelf Junk Removers were awesome! They showed up on time, took everything that was quoted — plus a few extra items I had on site — with no hassle. Super fast, efficient, affordable, and even had change because I paid with cash!. Great service all around. Highly recommend!' },
+  { author: 'Jeff Rau', rating: 5, text: 'Exceptional service and response from Top Shelf. Cleaning out a family home and we were able to fill a 15 cubic yard dumpster twice! Both deliveries were very timely and working with Top Shelf staff was great! Thank you for helping make our chore easier and efficient. I would easily recommend this business to others.' },
+  { author: 'Katrina Vincent', rating: 5, text: 'We recently hired Top Shelf to assist a client who had been a long time tenant for the company I work for, it was a big project, riddled with challenges. They far exceeded my expectations. Not only did they arrive on time and get right to work, they treated our clients with kindness and respect. They were extremely helpful and hard working. They accommodated our needs for appointment times and seemed to really want to earn our business. I hope to be able to utilize their services again! Would very highly recommend.' },
+  { author: 'Kevin McSpadden', rating: 5, text: 'Eric and Gabe were great. Positive attitude and tackled the job without complaint Pricing was great and will definitely use them again!' },
 ]
 
 export function GoogleReviews() {
@@ -62,7 +18,7 @@ export function GoogleReviews() {
   const [expandedReviews, setExpandedReviews] = useState(false)
   const reviewsPerPage = 4
   const rating = 5.0
-  const totalReviews = 100
+  const totalReviews = 323
 
   const nextSlide = () => {
     setCurrentIndex((prev) =>
@@ -151,7 +107,6 @@ export function GoogleReviews() {
                           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                         </svg>
                       </div>
-                      <p className="text-sm text-gray-500">{review.relative_time}</p>
                     </div>
                   </div>
 

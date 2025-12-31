@@ -7,32 +7,44 @@ import { Button } from '@/components/ui/button'
 // FAQ data used for both UI and structured data
 export const faqs = [
   {
-    question: 'How do you handle hoarding cleanup differently than regular junk removal?',
-    answer: 'Hoarding cleanup requires a compassionate, patient approach. We understand that every item may have emotional significance. We work with you or your family member to make decisions about what to keep, donate, or discard. We never throw anything away without permission, and we go at a pace that feels comfortable.'
-  },
-  {
-    question: 'Will you judge me or my loved one?',
-    answer: 'Absolutely not. Hoarding is a recognized mental health condition, not a character flaw. Our team is trained to approach every situation with empathy and professionalism. We\'ve seen it all, and we\'re here to help—not judge.'
-  },
-  {
-    question: 'How quickly can you start a hoarding cleanup?',
-    answer: 'For most situations, we can schedule an assessment within 24-48 hours. For emergencies like evictions or code violations, we offer same-day or next-day service. The actual cleanup timeline depends on the size and severity of the situation.'
-  },
-  {
-    question: 'Do you use unmarked trucks?',
-    answer: 'Yes. We understand that privacy is important. Our vehicles are unmarked so neighbors won\'t know why we\'re there. Your situation stays confidential.'
-  },
-  {
-    question: 'What happens to the items you remove?',
-    answer: 'We sort everything carefully. Items in good condition go to donation centers. Recyclables are recycled. We only send to the landfill what truly can\'t be salvaged. We can provide documentation of donations for tax purposes if needed.'
-  },
-  {
     question: 'How much does hoarding cleanup cost?',
-    answer: 'Every situation is different. Cost depends on the size of the space, amount of items, any hazardous materials, and the level of cleaning needed. We provide free, no-obligation estimates. Many cleanups in our area range from $500 for smaller spaces to $5,000+ for severe situations.'
+    answer: 'Every job is unique. Cost depends on the size of the home, volume of items, type of materials, and any hazards present. We provide free, no-obligation estimates so you know exactly what to expect before we start.'
   },
   {
-    question: 'Can the homeowner be present during the cleanup?',
-    answer: 'Yes, if they want to be. Some people prefer to be involved in decisions about their belongings. Others find it easier to step away and let us handle it. Either approach is fine—we follow the homeowner\'s lead.'
+    question: 'How long does hoarding cleanup take?',
+    answer: 'Most projects take 1-5 days depending on the home\'s size and level of accumulation. We work at your pace and can schedule half or full days based on your comfort level.'
+  },
+  {
+    question: 'Will you work with me if I want to be involved in the process?',
+    answer: 'Absolutely. We prefer working alongside you so you can make decisions about what stays and what goes. However, if you\'d rather not be present, we can work with your guidance remotely.'
+  },
+  {
+    question: 'Is hoarding cleanup dangerous?',
+    answer: 'It can be. Hoarded homes may contain mold, pest infestations, structural hazards, poor air quality, and fire risks. Our trained team knows how to handle these situations safely so you don\'t have to put yourself at risk.'
+  },
+  {
+    question: 'What happens to my belongings?',
+    answer: 'Nothing is thrown away without your approval. We help sort items, set aside valuables and keepsakes, donate usable goods to local charities, and recycle what we can. We can provide documentation of donations for tax purposes if needed.'
+  },
+  {
+    question: 'Do you handle biohazard situations?',
+    answer: 'Yes. We\'re equipped to handle situations involving mold, animal waste, pest infestations, and other unsanitary conditions following proper safety protocols.'
+  },
+  {
+    question: 'Do you offer financing options?',
+    answer: 'Yes. We offer flexible financing to help make our services more affordable. Our team is happy to explain available options so cost doesn\'t become an added burden during an already difficult time.'
+  },
+  {
+    question: 'Can you help a family member who isn\'t ready for cleanup?',
+    answer: 'We understand this is sensitive. Building trust comes first. We can work with family members, therapists, or social workers to approach the situation with compassion and patience.'
+  },
+  {
+    question: 'Do you offer ongoing maintenance after the cleanup?',
+    answer: 'Yes. Recovery is a journey. We offer follow-up visits—weekly, monthly, or as needed—to help maintain progress and prevent re-accumulation.'
+  },
+  {
+    question: 'What areas do you serve?',
+    answer: 'We serve Boise, Meridian, Nampa, Caldwell, Eagle, and the entire Treasure Valley. Same-day and emergency services are available for urgent situations.'
   }
 ]
 

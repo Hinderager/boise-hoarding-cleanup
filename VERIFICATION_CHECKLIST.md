@@ -2,7 +2,7 @@
 
 ## ✅ Contact Information
 - [x] Phone: (208) 505-9352 (updated in all files)
-- [x] Email: info@boise-hoarding-cleanup.com
+- [x] Email: info@topshelfpros.com
 - [x] Domain: boise-hoarding-cleanup.com
 
 ## ✅ Brand Identity
@@ -36,7 +36,7 @@
   - Biohazard Cleaning
   - Organization Help
 - [x] Phone: (208) 505-9352
-- [x] Email: info@boise-hoarding-cleanup.com
+- [x] Email: info@topshelfpros.com
 - [x] Hours: Mon-Sat 8am-6pm, Emergency 24/7
 - [x] Copyright: "Boise Hoarding Cleanup"
 
@@ -65,7 +65,7 @@
 ### 8. src/components/StructuredData.tsx
 - [x] Business name: "Boise Hoarding Cleanup"
 - [x] Phone: +1-208-505-9352
-- [x] Email: info@boise-hoarding-cleanup.com
+- [x] Email: info@topshelfpros.com
 - [x] Service types appropriate for hoarding cleanup
 - [x] FAQs optimized for LLM seeding
 

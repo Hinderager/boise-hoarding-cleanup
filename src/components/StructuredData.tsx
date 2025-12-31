@@ -53,7 +53,7 @@ export function StructuredData({ city = 'Boise' }: { city?: string }) {
     "description": `Professional hoarding cleanup services in ${city}, Idaho. Compassionate, discreet cleanup for hoarder homes. Licensed and insured.`,
     "url": "https://boise-hoarding-cleanup.com",
     "telephone": "+1-208-943-5231",
-    "email": "info@boise-hoarding-cleanup.com",
+    "email": "info@topshelfpros.com",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": city,
