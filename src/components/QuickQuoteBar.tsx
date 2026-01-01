@@ -6,6 +6,48 @@ import { Camera, Upload, X, ChevronDown, ChevronUp, Loader2 } from 'lucide-react
 // 5 minutes in milliseconds
 const ABANDONED_FORM_TIMEOUT = 5 * 60 * 1000
 
+// Compress image using Canvas API
+const compressImage = (file: File, maxWidth = 1200, quality = 0.75): Promise<File> => {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => {
+      // Calculate new dimensions
+      let { width, height } = img
+      if (width > maxWidth) {
+        height = (height * maxWidth) / width
+        width = maxWidth
+      }
+
+      // Create canvas and draw resized image
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      const ctx = canvas.getContext('2d')
+      ctx?.drawImage(img, 0, 0, width, height)
+
+      // Convert to blob
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            // Create new file with same name but compressed
+            const compressedFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now(),
+            })
+            resolve(compressedFile)
+          } else {
+            resolve(file) // Fallback to original if compression fails
+          }
+        },
+        'image/jpeg',
+        quality
+      )
+    }
+    img.onerror = () => resolve(file) // Fallback to original on error
+    img.src = URL.createObjectURL(file)
+  })
+}
+
 export function QuickQuoteBar() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -62,13 +104,10 @@ export function QuickQuoteBar() {
     }
   }
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('handlePhotoChange called')
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
-    console.log('Files selected:', files.length, files.map(f => f.name))
 
     if (files.length === 0) {
-      console.log('No files selected')
       return
     }
 
@@ -77,12 +116,15 @@ export function QuickQuoteBar() {
       return
     }
 
-    const newPhotos = [...photos, ...files].slice(0, 10)
-    console.log('New photos array:', newPhotos.length)
+    // Compress all new images
+    const compressedFiles = await Promise.all(
+      files.map(file => compressImage(file))
+    )
+
+    const newPhotos = [...photos, ...compressedFiles].slice(0, 10)
     setPhotos(newPhotos)
 
     const newPreviews = newPhotos.map(file => URL.createObjectURL(file))
-    console.log('New previews:', newPreviews)
     setPhotoPreviews(newPreviews)
 
     // Reset file input to allow selecting the same file again
