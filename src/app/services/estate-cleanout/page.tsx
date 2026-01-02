@@ -18,6 +18,8 @@ export default function EstateCleanoutPage() {
             Losing a loved one is hard enough. When their home was affected by hoarding, the cleanup can feel overwhelming. We handle it with the care and respect your family deserves.
           </p>
 
+
+          <QuickQuoteBar />
           <section className="mb-12">
             <div className="bg-blue-50 border-l-4 border-light-blue p-6 rounded-r-lg mb-8">
               <div className="flex items-start gap-3">
@@ -40,10 +42,7 @@ export default function EstateCleanoutPage() {
                 We can coordinate with estate attorneys, real estate agents, and other professionals involved in settling the estate. Our goal is to make this process as easy as possible for you.
               </p>
             </div>
-          </section>
-      <QuickQuoteBar />
-
-          <section className="mb-12">
+          </section>          <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">What We Do</h2>
             <div className="space-y-4">
               {[

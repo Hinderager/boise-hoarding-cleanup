@@ -18,6 +18,8 @@ export default function CommercialPage() {
             Property managers and landlords face unique challenges when dealing with hoarding situations. We provide fast, professional cleanup to get your property rent-ready again.
           </p>
 
+
+          <QuickQuoteBar />
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Who We Help</h2>
             <div className="grid md:grid-cols-2 gap-4 mb-8">
@@ -28,10 +30,7 @@ export default function CommercialPage() {
                 </div>
               ))}
             </div>
-          </section>
-      <QuickQuoteBar />
-
-          <section className="mb-12">
+          </section>          <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Our Services Include</h2>
             <div className="prose prose-lg max-w-none text-gray-600 [&>p]:mb-6">
               <ul>

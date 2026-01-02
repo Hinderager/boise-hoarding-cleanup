@@ -29,6 +29,8 @@ export default function ResidentialPage() {
             We provide compassionate hoarding cleanup services for homes throughout the Treasure Valley. We understand this isn't just about cleaning up—it's about helping someone regain control of their living space.
           </p>
 
+
+          <QuickQuoteBar />
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">How We Help</h2>
             <div className="prose prose-lg max-w-none text-gray-600 mb-8 [&>p]:mb-6">
@@ -42,10 +44,7 @@ export default function ResidentialPage() {
                 The goal is to create a safe, livable space while respecting the person's attachment to their belongings. This takes patience, and we have plenty of it.
               </p>
             </div>
-          </section>
-      <QuickQuoteBar />
-
-          <section className="mb-12">
+          </section>          <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">What You Can Expect</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {benefits.map((benefit, index) => (

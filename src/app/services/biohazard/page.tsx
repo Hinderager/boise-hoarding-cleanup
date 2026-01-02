@@ -18,6 +18,8 @@ export default function BiohazardPage() {
             Some hoarding situations involve biological hazards that require specialized cleanup. We're trained and equipped to handle these situations safely and thoroughly.
           </p>
 
+
+          <QuickQuoteBar />
           <section className="mb-12">
             <div className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg mb-8">
               <div className="flex items-start gap-3">
@@ -42,10 +44,7 @@ export default function BiohazardPage() {
                 <li>Medical waste disposal</li>
               </ul>
             </div>
-          </section>
-      <QuickQuoteBar />
-
-          <section className="mb-12">
+          </section>          <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Our Process</h2>
             <div className="space-y-6">
               <div className="bg-fog rounded-xl p-6">
