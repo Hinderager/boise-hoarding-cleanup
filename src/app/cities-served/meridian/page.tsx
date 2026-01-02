@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { HeroSection } from '@/components/HeroSection'
-import { SchedulingForm } from '@/components/SchedulingForm'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
 import { FAQ } from '@/components/FAQ'
@@ -58,8 +57,8 @@ export default function MeridianPage() {
         headline="Hoarding Cleanup in Meridian, Idaho"
         subheadline="We help Meridian families tackle hoarding situations. Respectful service, fair prices."
       />
+      <QuickQuoteBar />
 
-      <SchedulingForm city="Meridian" />
 
       {/* Meridian-Specific Content Section */}
       <section className="py-16 bg-white">
@@ -150,7 +149,6 @@ export default function MeridianPage() {
           </div>
         </div>
       </section>
-      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />

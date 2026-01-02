@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { HeroSection } from '@/components/HeroSection'
-import { SchedulingForm } from '@/components/SchedulingForm'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
 import { FAQ } from '@/components/FAQ'
@@ -58,8 +57,8 @@ export default function NampaPage() {
         headline="Hoarding Cleanup in Nampa, Idaho"
         subheadline="We help Nampa and Canyon County families with hoarding situations. No judgment, just help."
       />
+      <QuickQuoteBar />
 
-      <SchedulingForm city="Nampa" />
 
       {/* Nampa-Specific Content Section */}
       <section className="py-16 bg-white">
@@ -150,7 +149,6 @@ export default function NampaPage() {
           </div>
         </div>
       </section>
-      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />

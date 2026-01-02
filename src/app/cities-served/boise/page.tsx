@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { HeroSection } from '@/components/HeroSection'
-import { SchedulingForm } from '@/components/SchedulingForm'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
 import { FAQ } from '@/components/FAQ'
@@ -59,8 +58,8 @@ export default function BoisePage() {
         headline="Hoarding Cleanup in Boise, Idaho"
         subheadline="We help Boise families deal with hoarding situations. Respectful service, fair prices."
       />
+      <QuickQuoteBar />
 
-      <SchedulingForm city="Boise" />
 
       {/* Boise-Specific Content Section */}
       <section className="py-16 bg-white">
@@ -151,7 +150,6 @@ export default function BoisePage() {
           </div>
         </div>
       </section>
-      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />

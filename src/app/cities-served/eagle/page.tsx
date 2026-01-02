@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { HeroSection } from '@/components/HeroSection'
-import { SchedulingForm } from '@/components/SchedulingForm'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
 import { FAQ } from '@/components/FAQ'
@@ -59,8 +58,7 @@ export default function EaglePage() {
         headline="Hoarding Cleanup in Eagle, Idaho"
         subheadline="We help Eagle families tackle hoarding situations. Discreet service, fair prices."
       />
-
-      <SchedulingForm city="Eagle" />
+      <QuickQuoteBar />
 
       {/* Eagle-Specific Content Section */}
       <section className="py-16 bg-white">
@@ -151,7 +149,6 @@ export default function EaglePage() {
           </div>
         </div>
       </section>
-      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />

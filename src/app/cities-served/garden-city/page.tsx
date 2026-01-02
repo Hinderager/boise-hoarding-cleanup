@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { HeroSection } from '@/components/HeroSection'
-import { SchedulingForm } from '@/components/SchedulingForm'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
 import { FAQ } from '@/components/FAQ'
@@ -41,8 +40,8 @@ export default function GardenCityPage() {
         headline="Hoarding Cleanup in Garden City, Idaho"
         subheadline="We help Garden City families deal with hoarding situations. Respectful service, fair prices."
       />
+      <QuickQuoteBar />
 
-      <SchedulingForm city="Garden City" />
 
       {/* Garden City-Specific Content Section */}
       <section className="py-16 bg-white">
@@ -128,7 +127,6 @@ export default function GardenCityPage() {
           </div>
         </div>
       </section>
-      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />
