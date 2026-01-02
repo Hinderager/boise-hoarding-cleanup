@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: 'Hoarding Cleanup Services | Boise, Meridian, Nampa Idaho',
     description: 'Non-judgmental hoarding cleanup services in the Treasure Valley. We help families navigate difficult situations with compassion and respect. Licensed, insured, and discreet. Same-day service available.',
     url: 'https://boise-hoarding-cleanup.com',
-    siteName: 'Boise Hoarding Cleanup',
+    siteName: 'Top Shelf Hoarding Cleanup',
     locale: 'en_US',
     type: 'website',
   },

@@ -49,7 +49,7 @@ export function StructuredData({ city = 'Boise' }: { city?: string }) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": `Boise Hoarding Cleanup - ${city}`,
+    "name": `Top Shelf Hoarding Cleanup - ${city}`,
     "description": `Professional hoarding cleanup services in ${city}, Idaho. Compassionate, discreet cleanup for hoarder homes. Licensed and insured.`,
     "url": "https://boise-hoarding-cleanup.com",
     "telephone": "+1-208-943-5231",
@@ -103,7 +103,7 @@ export function StructuredData({ city = 'Boise' }: { city?: string }) {
     "serviceType": "Hoarding Cleanup Services",
     "provider": {
       "@type": "LocalBusiness",
-      "name": "Boise Hoarding Cleanup"
+      "name": "Top Shelf Hoarding Cleanup"
     },
     "areaServed": {
       "@type": "State",
