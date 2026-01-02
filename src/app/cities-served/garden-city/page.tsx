@@ -7,6 +7,7 @@ import { FAQ } from '@/components/FAQ'
 import { StructuredData } from '@/components/StructuredData'
 import { CheckCircle, MapPin, Phone } from 'lucide-react'
 import Link from 'next/link'
+import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Garden City Idaho | Professional Hoarder Cleanout',
@@ -127,6 +128,7 @@ export default function GardenCityPage() {
           </div>
         </div>
       </section>
+      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />

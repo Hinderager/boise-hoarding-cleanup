@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { Phone, Shield } from 'lucide-react'
+import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 
 export const metadata: Metadata = {
   title: 'Biohazard Cleanup Boise | Safe Contamination Removal',
@@ -42,6 +43,7 @@ export default function BiohazardPage() {
               </ul>
             </div>
           </section>
+      <QuickQuoteBar />
 
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Our Process</h2>

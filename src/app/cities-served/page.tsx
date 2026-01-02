@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { MapPin } from 'lucide-react'
+import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Service Areas | Boise Hoarding Cleanup',
@@ -44,6 +45,8 @@ export default function CitiesServedPage() {
         <p className="text-xl text-gray-600 mb-12 max-w-3xl">
           We provide compassionate hoarding cleanup services throughout the Treasure Valley. From Boise to Caldwell and everywhere in between, we're here to help.
         </p>
+
+          <QuickQuoteBar />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cities.map((city) => (

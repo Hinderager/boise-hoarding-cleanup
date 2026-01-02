@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Home, Building2, Droplet, Briefcase } from 'lucide-react'
+import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Services Boise | Professional Cleanup',
@@ -23,6 +24,8 @@ export default function ServicesPage() {
         <p className="text-xl text-gray-600 mb-12 max-w-3xl">
           We provide professional, compassionate hoarding cleanup services throughout the Treasure Valley. Every situation is different, and we treat each one with the care and respect it deserves.
         </p>
+
+          <QuickQuoteBar />
 
         <div className="grid md:grid-cols-2 gap-8">
           {serviceCategories.map((category) => (

@@ -7,6 +7,7 @@ import { FAQ } from '@/components/FAQ'
 import { StructuredData } from '@/components/StructuredData'
 import { CheckCircle, MapPin, Phone } from 'lucide-react'
 import Link from 'next/link'
+import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Caldwell Idaho | Hoarder Cleanout Services Canyon County',
@@ -150,6 +151,7 @@ export default function CaldwellPage() {
           </div>
         </div>
       </section>
+      <QuickQuoteBar />
 
       <WhyChooseUs />
       <ServiceProcess />
