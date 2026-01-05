@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How to Support a Family Member Through Hoarding Cleanup',
     description: 'Learn how to provide meaningful support to your loved one during and after the hoarding cleanup process.',
-    url: 'https://boise-hoarding-cleanup.com/blog/supporting-family-through-cleanup',
+    url: 'https://boise-hoarding-cleanup.com/blogs/supporting-family-through-cleanup',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/blog/supporting-family-through-cleanup',
+    canonical: 'https://boise-hoarding-cleanup.com/blogs/supporting-family-through-cleanup',
   },
 }
 
@@ -213,7 +213,7 @@ export default function BlogPost() {
               <span className="text-sm text-light-blue font-medium">Related Resource</span>
               <h3 className="font-bold text-gunmetal">How to Help a Hoarder</h3>
             </Link>
-            <Link href="/blog/what-to-expect-hoarding-cleanup" className="bg-fog rounded-lg p-4 hover:shadow-md transition-shadow">
+            <Link href="/blogs/what-to-expect-hoarding-cleanup" className="bg-fog rounded-lg p-4 hover:shadow-md transition-shadow">
               <span className="text-sm text-light-blue font-medium">Related Post</span>
               <h3 className="font-bold text-gunmetal">What to Expect During Cleanup</h3>
             </Link>

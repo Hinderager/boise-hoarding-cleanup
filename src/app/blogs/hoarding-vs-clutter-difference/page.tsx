@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Hoarding vs Clutter: Understanding the Difference',
     description: 'Learn how to tell the difference between clutter and hoarding, and when messiness becomes a concern.',
-    url: 'https://boise-hoarding-cleanup.com/blog/hoarding-vs-clutter-difference',
+    url: 'https://boise-hoarding-cleanup.com/blogs/hoarding-vs-clutter-difference',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/blog/hoarding-vs-clutter-difference',
+    canonical: 'https://boise-hoarding-cleanup.com/blogs/hoarding-vs-clutter-difference',
   },
 }
 

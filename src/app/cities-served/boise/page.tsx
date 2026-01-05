@@ -26,10 +26,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Hoarding Cleanup Boise Idaho | Professional Hoarder Cleanout',
     description: 'Professional, compassionate hoarding cleanup services in Boise, Idaho. Licensed, insured, and discreet. Same-day service available.',
-    url: 'https://boise-hoarding-cleanup.com/boise',
+    url: 'https://boise-hoarding-cleanup.com/cities-served/boise',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/boise',
+    canonical: 'https://boise-hoarding-cleanup.com/cities-served/boise',
   },
 }
 

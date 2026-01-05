@@ -82,9 +82,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${oswald.variable} ${montserrat.variable} scroll-smooth`}>
-      <head>
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <StructuredData />
         <BreadcrumbSchema siteName="Top Shelf Hoarding Cleanup" siteUrl="https://boise-hoarding-cleanup.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -96,7 +93,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.google.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
       <body className={`${montserrat.variable} ${oswald.variable} font-sans antialiased`}>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-581QKP6ZE5"

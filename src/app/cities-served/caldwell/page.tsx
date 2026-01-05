@@ -26,10 +26,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Hoarding Cleanup Caldwell Idaho | Canyon County Hoarder Cleanout',
     description: 'Professional, compassionate hoarding cleanup services in Caldwell, Idaho. Licensed, insured, and discreet. Same-day service available.',
-    url: 'https://boise-hoarding-cleanup.com/caldwell',
+    url: 'https://boise-hoarding-cleanup.com/cities-served/caldwell',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/caldwell',
+    canonical: 'https://boise-hoarding-cleanup.com/cities-served/caldwell',
   },
 }
 

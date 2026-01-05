@@ -15,10 +15,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'What to Expect During a Professional Hoarding Cleanup',
     description: 'We walk you through the entire hoarding cleanup process from initial consultation to final cleaning.',
-    url: 'https://boise-hoarding-cleanup.com/blog/what-to-expect-hoarding-cleanup',
+    url: 'https://boise-hoarding-cleanup.com/blogs/what-to-expect-hoarding-cleanup',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/blog/what-to-expect-hoarding-cleanup',
+    canonical: 'https://boise-hoarding-cleanup.com/blogs/what-to-expect-hoarding-cleanup',
   },
 }
 

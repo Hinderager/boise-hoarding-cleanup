@@ -25,10 +25,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Hoarding Cleanup Nampa Idaho | Canyon County Hoarder Cleanout',
     description: 'Professional, compassionate hoarding cleanup services in Nampa, Idaho. Licensed, insured, and discreet. Same-day service available.',
-    url: 'https://boise-hoarding-cleanup.com/nampa',
+    url: 'https://boise-hoarding-cleanup.com/cities-served/nampa',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/nampa',
+    canonical: 'https://boise-hoarding-cleanup.com/cities-served/nampa',
   },
 }
 

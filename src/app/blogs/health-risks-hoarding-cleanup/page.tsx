@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Health Risks of Hoarding: Why Professional Cleanup Matters',
     description: 'Learn about the serious health hazards created by hoarding and why professional cleanup is often necessary.',
-    url: 'https://boise-hoarding-cleanup.com/blog/health-risks-hoarding-cleanup',
+    url: 'https://boise-hoarding-cleanup.com/blogs/health-risks-hoarding-cleanup',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/blog/health-risks-hoarding-cleanup',
+    canonical: 'https://boise-hoarding-cleanup.com/blogs/health-risks-hoarding-cleanup',
   },
 }
 

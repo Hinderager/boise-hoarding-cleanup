@@ -25,10 +25,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Hoarding Cleanup Meridian Idaho | Professional Hoarder Cleanout',
     description: 'Professional, compassionate hoarding cleanup services in Meridian, Idaho. Licensed, insured, and discreet. Same-day service available.',
-    url: 'https://boise-hoarding-cleanup.com/meridian',
+    url: 'https://boise-hoarding-cleanup.com/cities-served/meridian',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/meridian',
+    canonical: 'https://boise-hoarding-cleanup.com/cities-served/meridian',
   },
 }
 

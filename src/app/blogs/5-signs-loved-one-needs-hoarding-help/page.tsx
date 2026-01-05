@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: '5 Signs Your Loved One May Need Hoarding Help',
     description: 'Recognizing when a family member needs professional help with hoarding can be difficult. Learn the 5 key warning signs.',
-    url: 'https://boise-hoarding-cleanup.com/blog/5-signs-loved-one-needs-hoarding-help',
+    url: 'https://boise-hoarding-cleanup.com/blogs/5-signs-loved-one-needs-hoarding-help',
   },
   alternates: {
-    canonical: 'https://boise-hoarding-cleanup.com/blog/5-signs-loved-one-needs-hoarding-help',
+    canonical: 'https://boise-hoarding-cleanup.com/blogs/5-signs-loved-one-needs-hoarding-help',
   },
 }
 
