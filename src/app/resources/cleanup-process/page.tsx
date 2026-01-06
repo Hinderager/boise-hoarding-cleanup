@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { Phone, CheckCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -157,6 +158,8 @@ export default function CleanupProcessPage() {
               </div>
             </div>
           </section>
+
+          <VisibleBreadcrumb />
 
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">What Makes Our Process Different</h2>

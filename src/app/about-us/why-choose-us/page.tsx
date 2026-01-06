@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { Phone, CheckCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -85,6 +86,8 @@ export default function WhyChooseUsPage() {
               </p>
             </div>
           </section>
+
+          <VisibleBreadcrumb />
 
           <div className="p-8 bg-dark-blue rounded-xl text-center">
             <h3 className="text-2xl font-bold text-white mb-4">Ready to Work With Us?</h3>

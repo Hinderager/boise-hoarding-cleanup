@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import Link from 'next/link'
 import { Calendar, Clock, ArrowLeft, Phone, Heart, MessageCircle, Users, Shield } from 'lucide-react'
 

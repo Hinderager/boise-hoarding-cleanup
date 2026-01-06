@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import Link from 'next/link'
 import { Brain, Heart, Star } from 'lucide-react'
 

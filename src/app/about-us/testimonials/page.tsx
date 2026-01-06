@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { Phone, Star } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -73,6 +74,8 @@ export default function TestimonialsPage() {
               Hoarding can feel isolating. We share these testimonials so you know you're not alone. Other people have been where you are, and things got better. Recovery is possible, and we're here to help.
             </p>
           </section>
+
+          <VisibleBreadcrumb />
 
           <div className="p-8 bg-dark-blue rounded-xl text-center">
             <h3 className="text-2xl font-bold text-white mb-4">Start Your Own Recovery Story</h3>

@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { Phone, Mail, MapPin, Clock, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {

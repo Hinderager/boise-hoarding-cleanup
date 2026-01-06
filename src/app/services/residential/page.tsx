@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { Phone, CheckCircle } from 'lucide-react'
 import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 

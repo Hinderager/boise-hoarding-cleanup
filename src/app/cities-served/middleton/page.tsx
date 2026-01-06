@@ -7,6 +7,7 @@ import { StructuredData } from '@/components/StructuredData'
 import { CheckCircle, MapPin, Phone } from 'lucide-react'
 import Link from 'next/link'
 import { QuickQuoteBar } from '@/components/QuickQuoteBar'
+import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Middleton Idaho | Professional Hoarder Cleanout',
