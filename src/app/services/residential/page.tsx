@@ -31,6 +31,10 @@ export default function ResidentialPage() {
           </p>
 
 
+          <VisibleBreadcrumb />
+
+
+
           <QuickQuoteBar />
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">How We Help</h2>

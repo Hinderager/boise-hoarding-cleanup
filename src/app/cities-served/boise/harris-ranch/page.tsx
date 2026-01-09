@@ -43,6 +43,9 @@ export default function HarrisRanchPage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

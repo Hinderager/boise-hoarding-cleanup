@@ -67,6 +67,7 @@ export default function BlogsPage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
       {/* Blog Grid */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">

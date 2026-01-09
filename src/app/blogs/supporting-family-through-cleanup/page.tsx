@@ -50,6 +50,7 @@ const supportStrategies = [
 export default function BlogPost() {
   return (
     <main className="pt-20">
+      <VisibleBreadcrumb />
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           {/* Back Link */}

@@ -43,6 +43,9 @@ export default function LochsaFallsPage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

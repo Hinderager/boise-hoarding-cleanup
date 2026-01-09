@@ -20,6 +20,10 @@ export default function BiohazardPage() {
           </p>
 
 
+          <VisibleBreadcrumb />
+
+
+
           <QuickQuoteBar />
           <section className="mb-12">
             <div className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg mb-8">

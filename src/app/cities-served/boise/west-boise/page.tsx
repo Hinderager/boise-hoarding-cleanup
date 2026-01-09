@@ -43,6 +43,9 @@ export default function WestBoisePage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

@@ -59,6 +59,8 @@ export default function BoisePage() {
         headline="Hoarding Cleanup in Boise, Idaho"
         subheadline="We help Boise families deal with hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

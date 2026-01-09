@@ -59,6 +59,8 @@ export default function CaldwellPage() {
         headline="Hoarding Cleanup in Caldwell, Idaho"
         subheadline="We help Caldwell families tackle hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

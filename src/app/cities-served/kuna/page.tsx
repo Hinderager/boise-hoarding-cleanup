@@ -41,6 +41,8 @@ export default function KunaPage() {
         headline="Hoarding Cleanup in Kuna, Idaho"
         subheadline="We help Kuna families deal with hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

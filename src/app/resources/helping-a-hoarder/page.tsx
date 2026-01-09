@@ -109,6 +109,7 @@ export default function HelpingAHoarderPage() {
             </div>
           </section>
 
+          <VisibleBreadcrumb />
           {/* Do's and Don'ts */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Do&apos;s and Don&apos;ts</h2>

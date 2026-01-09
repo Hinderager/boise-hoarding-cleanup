@@ -58,6 +58,8 @@ export default function NampaPage() {
         headline="Hoarding Cleanup in Nampa, Idaho"
         subheadline="We help Nampa and Canyon County families with hoarding situations. No judgment, just help."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

@@ -41,6 +41,8 @@ export default function GardenCityPage() {
         headline="Hoarding Cleanup in Garden City, Idaho"
         subheadline="We help Garden City families deal with hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

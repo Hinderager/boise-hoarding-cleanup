@@ -26,6 +26,9 @@ export default function ServicesPage() {
           We provide professional, compassionate hoarding cleanup services throughout the Treasure Valley. Every situation is different, and we treat each one with the care and respect it deserves.
         </p>
 
+          <VisibleBreadcrumb />
+
+
           <QuickQuoteBar />
 
         <div className="grid md:grid-cols-2 gap-8">

@@ -41,6 +41,8 @@ export default function StarPage() {
         headline="Hoarding Cleanup in Star, Idaho"
         subheadline="We help Star families deal with hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

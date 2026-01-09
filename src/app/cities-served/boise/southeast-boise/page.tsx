@@ -43,6 +43,9 @@ export default function SoutheastBoisePage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

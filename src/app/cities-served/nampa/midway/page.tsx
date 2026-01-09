@@ -43,6 +43,9 @@ export default function MidwayPage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

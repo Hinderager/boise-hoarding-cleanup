@@ -43,6 +43,9 @@ export default function DowntownBoisePage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

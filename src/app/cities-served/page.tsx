@@ -47,6 +47,9 @@ export default function CitiesServedPage() {
           We provide compassionate hoarding cleanup services throughout the Treasure Valley. From Boise to Caldwell and everywhere in between, we're here to help.
         </p>
 
+          <VisibleBreadcrumb />
+
+
           <QuickQuoteBar />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

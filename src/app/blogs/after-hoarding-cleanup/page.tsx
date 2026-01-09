@@ -41,6 +41,7 @@ export default function AfterHoardingCleanup() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
       {/* Intro Section */}
       <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4">

@@ -43,6 +43,9 @@ export default function DowntownNampaPage() {
         </div>
       </section>
 
+      <VisibleBreadcrumb />
+
+
       <QuickQuoteBar />
 
       {/* Main Content */}

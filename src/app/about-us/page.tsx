@@ -53,6 +53,7 @@ export default function AboutUsPage() {
             </p>
           </div>
         </section>
+      <VisibleBreadcrumb />
       </div>
     </main>
   )

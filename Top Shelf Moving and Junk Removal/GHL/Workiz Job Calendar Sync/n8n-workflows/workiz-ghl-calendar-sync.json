@@ -1,0 +1,639 @@
+{
+  "id": "mcNTo6Vhf8UrGqqr",
+  "name": "Workiz → GHL Calendar Sync",
+  "description": "Syncs Workiz jobs with 'Submitted' status to GHL calendars. Handles create, update, calendar changes, and orphan detection.",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "trigger",
+      "name": "Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 456]
+    },
+    {
+      "parameters": {
+        "url": "https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/v_jobs_needing_ghl_sync?select=*",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-jobs",
+      "name": "Fetch Jobs Needing Sync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [224, 120]
+    },
+    {
+      "parameters": {
+        "url": "https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?select=workiz_job_id,workiz_serial_id,ghl_calendar_id,ghl_appointment_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-existing-sync",
+      "name": "Fetch Existing Sync Records",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [224, 360]
+    },
+    {
+      "parameters": {
+        "url": "https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/all_workiz_jobs?select=uuid,serial_id,status,sub_status&scheduled_date=gte.2024-01-01",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-workiz-jobs-orphan",
+      "name": "Fetch Workiz Jobs (Orphan)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [224, 552]
+    },
+    {
+      "parameters": {
+        "url": "https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?select=id,workiz_job_id,workiz_serial_id,ghl_calendar_id,ghl_appointment_id,calendar_name,customer_name",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-sync-records-orphan",
+      "name": "Fetch Sync Records (Orphan)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [224, 744]
+    },
+    {
+      "parameters": { "mode": "append" },
+      "id": "merge-orphan-data",
+      "name": "Merge Orphan Data",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [448, 648]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ORPHAN DETECTION - Delete appointments for ANY job not in 'Submitted' status\n// SIMPLIFIED: Only 'Submitted' jobs should have calendar appointments\nconst allItems = $input.all();\nconsole.log('=== ORPHAN DETECTION (Submitted-Only Mode) ===');\nconsole.log('Received items:', allItems.length);\n\nlet workizJobs = [];\nlet syncRecords = [];\n\nfor (const item of allItems) {\n  const data = item.json;\n  if (data.uuid !== undefined && data.status !== undefined) {\n    workizJobs.push(data);\n  } else if (data.ghl_appointment_id !== undefined && data.id !== undefined) {\n    syncRecords.push(data);\n  }\n}\n\nconsole.log('Workiz jobs:', workizJobs.length);\nconsole.log('Sync records:', syncRecords.length);\n\nif (syncRecords.length > 0 && workizJobs.length === 0) {\n  console.log('SAFETY: Sync records exist but no Workiz jobs found - aborting');\n  return [{ json: { noOrphans: true, message: 'Aborted: No Workiz jobs found but sync records exist' } }];\n}\n\n// Build map of job UUID -> status\nconst jobStatusMap = new Map();\nfor (const job of workizJobs) {\n  jobStatusMap.set(job.uuid, job.status);\n}\n\n// Find sync records where job is NOT 'Submitted'\nconst orphanedRecords = [];\n\nfor (const sync of syncRecords) {\n  if (!sync.ghl_appointment_id) continue;\n  \n  const jobStatus = jobStatusMap.get(sync.workiz_job_id);\n  \n  // Delete if: job doesn't exist OR job status is NOT 'Submitted'\n  if (!jobStatus || jobStatus !== 'Submitted') {\n    const reason = !jobStatus ? 'job_deleted' : `status_changed_to_${jobStatus}`;\n    console.log('Orphan found: #' + sync.workiz_serial_id + ' (' + reason + ')');\n    orphanedRecords.push({ json: { ...sync, deleteReason: reason } });\n  }\n}\n\nconsole.log('Orphaned records to delete:', orphanedRecords.length);\n\nif (orphanedRecords.length === 0) {\n  return [{ json: { noOrphans: true, message: 'No orphaned records found', workizJobCount: workizJobs.length, syncRecordCount: syncRecords.length } }];\n}\n\nreturn orphanedRecords;"
+      },
+      "id": "find-orphaned-records",
+      "name": "Find Orphaned Records",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [672, 648]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            { "leftValue": "={{ $json.noOrphans }}", "rightValue": true, "operator": { "type": "boolean", "operation": "notEquals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-has-orphans",
+      "name": "Has Orphans?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [896, 648]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://services.leadconnectorhq.com/calendars/events/{{ $json.ghl_appointment_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-04-15" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "delete-ghl-appointment",
+      "name": "Delete GHL Appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 552],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?id=eq.{{ $('Find Orphaned Records').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "delete-sync-record",
+      "name": "Delete Sync Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1344, 552]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const orphan = $('Find Orphaned Records').item.json;\nconsole.log('[DELETED] GHL Appointment for Job #' + orphan.workiz_serial_id + ' (' + orphan.customer_name + ') - Reason: ' + orphan.deleteReason);\nreturn { json: { deleted: true, serial_id: orphan.workiz_serial_id, reason: orphan.deleteReason } };"
+      },
+      "id": "log-deletion",
+      "name": "Log Deletion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1568, 552]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "console.log('[Reconcile] No orphaned records to delete');\nreturn { json: { noOrphans: true, timestamp: new Date().toISOString() } };"
+      },
+      "id": "log-no-orphans",
+      "name": "Log No Orphans",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 744]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process jobs - now includes calendar_change handling\nconst allItems = $input.all();\nlet jobs = [];\nlet syncRecords = [];\n\nfor (const item of allItems) {\n  const data = item.json;\n  if (Array.isArray(data)) {\n    for (const obj of data) {\n      if (obj.uuid !== undefined) { jobs.push(obj); }\n      else if (obj.workiz_job_id !== undefined) { syncRecords.push(obj); }\n    }\n  } else {\n    if (data.uuid !== undefined) { jobs.push(data); }\n    else if (data.workiz_job_id !== undefined) { syncRecords.push(data); }\n  }\n}\n\nconsole.log('[Process] Found ' + jobs.length + ' jobs and ' + syncRecords.length + ' sync records');\n\nif (jobs.length === 0) {\n  console.log('[Process] No jobs to process - returning placeholder');\n  return [{ json: { noJobs: true, message: 'No jobs need syncing', timestamp: new Date().toISOString() } }];\n}\n\nconst syncByJobId = new Map();\nfor (const rec of syncRecords) {\n  const key = rec.workiz_job_id + ':' + rec.ghl_calendar_id;\n  syncByJobId.set(key, rec);\n}\n\nconst calendarMap = {\n  'Trk': { id: '0AkKJlyRJBwNZpgrOhfU', name: 'Moving Truck' },\n  'Lbr': { id: 'PWWdUDEK9eP7Bvinb0ih', name: 'Moving Labor' },\n  'dump': { id: 'TlePmdXVpjDbinUx4oDP', name: 'Dumpster' }\n};\nconst jobTypeMap = {\n  'Junk Removal': { id: 'IBj7neUJqMiyOXIHuvnH', name: 'Junk Removal' },\n  'Moving WT': { id: '4orSQiAYCJWVxC9Lqv4w', name: 'Moving WT' },\n  'Junk Removal WT': { id: '9VFh4tf6SVZXggtGh1Yd', name: 'Junk Removal WT' }\n};\n\nconst results = [];\nconst seenSerials = new Set();\n\nfor (const job of jobs) {\n  let tags = [];\n  try { tags = typeof job.tags === 'string' ? JSON.parse(job.tags) : (job.tags || []); } catch (e) { tags = []; }\n  \n  // Get target calendar from tags\n  let targetCalendarId = null, targetCalendarName = null;\n  for (const tag of tags) {\n    if (calendarMap[tag]) { targetCalendarId = calendarMap[tag].id; targetCalendarName = calendarMap[tag].name; break; }\n  }\n  if (!targetCalendarId && job.job_type && jobTypeMap[job.job_type]) {\n    targetCalendarId = jobTypeMap[job.job_type].id; targetCalendarName = jobTypeMap[job.job_type].name;\n  }\n  if (!targetCalendarId) {\n    console.log('[Skip] Job #' + job.serial_id + ' - no calendar mapping for type: ' + job.job_type);\n    continue;\n  }\n  \n  const batchKey = job.serial_id + ':' + targetCalendarId;\n  if (seenSerials.has(batchKey)) continue;\n  seenSerials.add(batchKey);\n  \n  // Check sync_action from view\n  let syncAction = job.sync_action;\n  \n  // For calendar_change, we need to pass the OLD calendar info for deletion\n  const oldCalendarId = job.current_calendar_id;\n  const oldAppointmentId = job.ghl_appointment_id;\n  const syncId = job.sync_id;\n  \n  console.log('[Process] Job #' + job.serial_id + ' -> ' + targetCalendarName + ' [' + syncAction + ']' + (syncAction === 'calendar_change' ? ' (from ' + job.current_calendar_name + ')' : ''));\n  \n  results.push({ json: { \n    ...job, \n    parsedTags: tags, \n    ghlCalendarId: targetCalendarId, \n    ghlCalendarName: targetCalendarName, \n    oldCalendarId: oldCalendarId,\n    oldAppointmentId: oldAppointmentId,\n    syncId: syncId,\n    sync_action: syncAction, \n    cleanPhone: (job.phone || '').replace(/\\D/g, '') \n  }});\n}\n\nif (results.length === 0) {\n  console.log('[Process] No processable jobs after filtering - returning placeholder');\n  return [{ json: { noJobs: true, message: 'No jobs matched calendar criteria', timestamp: new Date().toISOString() } }];\n}\n\nconsole.log('[Process] Returning ' + results.length + ' jobs to process');\nreturn results;"
+      },
+      "id": "process-jobs",
+      "name": "Process Each Job",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [448, 216]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            { "leftValue": "={{ $json.noJobs }}", "rightValue": true, "operator": { "type": "boolean", "operation": "notEquals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-has-jobs",
+      "name": "Has Jobs?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [672, 216]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            { "leftValue": "={{ $json.sync_action }}", "rightValue": "calendar_change", "operator": { "type": "string", "operation": "equals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-calendar-change",
+      "name": "Is Calendar Change?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [896, 216]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://services.leadconnectorhq.com/calendars/events/{{ $json.oldAppointmentId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-04-15" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "delete-old-calendar-appointment",
+      "name": "Delete Old Calendar Appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 120],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?id=eq.{{ $('Is Calendar Change?').item.json.syncId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "delete-old-sync-record",
+      "name": "Delete Old Sync Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1344, 120]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $('Is Calendar Change?').item.json;\nconsole.log('[Calendar Change] Job #' + job.serial_id + ': Deleted from ' + job.current_calendar_name + ', will create on ' + job.ghlCalendarName);\nreturn { json: { ...job, sync_action: 'create', ghl_appointment_id: null } };"
+      },
+      "id": "prepare-calendar-change-create",
+      "name": "Prepare For New Calendar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1568, 120]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            { "leftValue": "={{ $json.sync_action }}", "rightValue": "update", "operator": { "type": "string", "operation": "equals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "route-action",
+      "name": "Is Update?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 360]
+    },
+    {
+      "parameters": {
+        "url": "=https://services.leadconnectorhq.com/contacts/?locationId={{GHL_LOCATION_ID}}&query={{ $json.cleanPhone }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-07-28" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "search-contact",
+      "name": "Search GHL Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2016, 360]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $('Is Update?').item.json;\nconst searchResult = $json;\nconst contacts = searchResult.contacts || [];\nlet contactId = null, needsCreateContact = false;\nif (contacts.length > 0) { contactId = contacts[0].id; } else { needsCreateContact = true; }\nreturn { json: { ...job, contactId, needsCreateContact, contactPayload: needsCreateContact ? JSON.stringify({ firstName: job.first_name || '', lastName: job.last_name || '', phone: job.phone || '', email: job.email || '', locationId: '{{GHL_LOCATION_ID}}', address1: job.address || '', city: job.city || '', state: job.state || '', postalCode: job.postal_code || '', tags: ['workiz-sync'] }) : null } };"
+      },
+      "id": "prepare-contact",
+      "name": "Prepare Contact Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2240, 360]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            { "leftValue": "={{ $json.needsCreateContact }}", "rightValue": true, "operator": { "type": "boolean", "operation": "equals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-create-contact",
+      "name": "Need Create Contact?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2464, 360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/contacts/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-07-28" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.contactPayload }}",
+        "options": {}
+      },
+      "id": "create-contact",
+      "name": "Create GHL Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2688, 288]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $('Prepare Contact Data').item.json;\nconst newContact = $json.contact || {};\nreturn { json: { ...job, contactId: newContact.id || job.contactId } };"
+      },
+      "id": "extract-contact-id",
+      "name": "Extract Contact ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2912, 288]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $json;\nconst tags = job.parsedTags || [];\n\nfunction mapStatusToGHL(s) {\n  if (!s) return 'confirmed';\n  s = s.trim();\n  if (s.toUpperCase().includes('OMW')) return 'confirmed';\n  const m = {'Submitted':'confirmed','In Progress':'showed','Canceled':'cancelled','Done':'showed','Yes Review':'showed'};\n  return m[s] || 'confirmed';\n}\n\n// Parse team - handle both string JSON and array\nlet team = [];\ntry { \n  team = typeof job.team === 'string' ? JSON.parse(job.team) : (job.team || []); \n} catch (e) { team = []; }\n\n// Extract team member names (Workiz uses 'Name' with capital N)\nconst teamNames = team.length > 0 \n  ? team.map(t => t.Name || t.name || t).join(', ') \n  : 'Unassigned';\n\nconst jobDateTime = new Date(job.job_date_time);\nconst endTime = job.job_end_date_time || new Date(jobDateTime.getTime() + 2*60*60*1000).toISOString();\nconst ghlStatus = mapStatusToGHL(job.status);\n\nconst searchStartEpoch = jobDateTime.getTime() - (7 * 24 * 60 * 60 * 1000);\nconst searchEndEpoch = jobDateTime.getTime() + (7 * 24 * 60 * 60 * 1000);\n\nconst desc = [\n  'Job #' + job.serial_id,\n  'Type: ' + (job.job_type || 'N/A'),\n  'Status: ' + (job.status || 'N/A'),\n  'Tags: ' + (tags.join(', ') || 'None'),\n  '',\n  'Address: ' + (job.address || '') + (job.unit ? ', Unit ' + job.unit : '') + ', ' + (job.city || '') + ', ' + (job.state || '') + ' ' + (job.postal_code || ''),\n  'Phone: ' + (job.phone || 'N/A'),\n  'Email: ' + (job.email || 'N/A'),\n  '',\n  'Notes: ' + (job.job_notes || 'N/A'),\n  '',\n  'Team: ' + teamNames,\n  '',\n  'Total: $' + (job.job_total_price || '0.00')\n].join('\\n');\n\nconst payload = {\n  calendarId: job.ghlCalendarId,\n  locationId: '{{GHL_LOCATION_ID}}',\n  contactId: job.contactId,\n  assignedUserId: '{{GHL_ASSIGNED_USER_ID}}',\n  startTime: job.job_date_time,\n  endTime: endTime,\n  title: '#' + job.serial_id + ' - ' + (job.first_name || '') + ' ' + (job.last_name || '') + ' - ' + (job.job_type || ''),\n  description: desc,\n  address: (job.address || '') + ', ' + (job.city || '') + ', ' + (job.state || '') + ' ' + (job.postal_code || ''),\n  appointmentStatus: ghlStatus,\n  ignoreFreeSlotValidation: true,\n  toNotify: false\n};\n\nreturn {\n  json: {\n    ...job,\n    appointmentPayload: JSON.stringify(payload),\n    ghlStatus,\n    searchStartEpoch,\n    searchEndEpoch\n  }\n};"
+      },
+      "id": "build-appointment",
+      "name": "Build Appointment Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3136, 360]
+    },
+    {
+      "parameters": {
+        "url": "=https://services.leadconnectorhq.com/calendars/events?locationId={{GHL_LOCATION_ID}}&calendarId={{ $json.ghlCalendarId }}&startTime={{ $json.searchStartEpoch }}&endTime={{ $json.searchEndEpoch }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-04-15" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "search-calendar",
+      "name": "Search GHL Calendar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3360, 360]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $('Build Appointment Payload').item.json;\nconst searchResult = $json;\nconst events = searchResult.events || [];\nconst exactPattern = '#' + job.serial_id + ' ';\n\nlet existingEvent = null;\nfor (const event of events) {\n  if (event.appointmentStatus === 'cancelled') continue;\n  if (event.title && event.title.startsWith(exactPattern)) {\n    existingEvent = event;\n    break;\n  }\n}\n\nif (existingEvent) {\n  console.log('[Duplicate Found] Job #' + job.serial_id + ' already exists (ID: ' + existingEvent.id + ')');\n} else {\n  console.log('[No Duplicate] Job #' + job.serial_id + ' not found');\n}\n\nreturn {\n  json: {\n    ...job,\n    ghlDuplicateFound: !!existingEvent,\n    existingGhlEventId: existingEvent ? existingEvent.id : null,\n    existingCalendarId: existingEvent ? job.ghlCalendarId : null,\n    existingContactId: existingEvent ? existingEvent.contactId : null\n  }\n};"
+      },
+      "id": "check-duplicate",
+      "name": "Check Duplicate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3584, 360]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            { "leftValue": "={{ $json.ghlDuplicateFound }}", "rightValue": false, "operator": { "type": "boolean", "operation": "equals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "should-create",
+      "name": "Should Create?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3808, 360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/calendars/events/appointments",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-04-15" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.appointmentPayload }}",
+        "options": {}
+      },
+      "id": "create-appointment",
+      "name": "Create GHL Appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4032, 264]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?on_conflict=workiz_job_id,ghl_calendar_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workiz_job_id: $('Build Appointment Payload').item.json.uuid, workiz_serial_id: $('Build Appointment Payload').item.json.serial_id, ghl_appointment_id: $json.id, ghl_calendar_id: $('Build Appointment Payload').item.json.ghlCalendarId, ghl_contact_id: $('Build Appointment Payload').item.json.contactId, calendar_name: $('Build Appointment Payload').item.json.ghlCalendarName, job_datetime: $('Build Appointment Payload').item.json.job_date_time, job_type: $('Build Appointment Payload').item.json.job_type, job_status: $('Build Appointment Payload').item.json.status, customer_name: ($('Build Appointment Payload').item.json.first_name || '') + ' ' + ($('Build Appointment Payload').item.json.last_name || ''), customer_phone: $('Build Appointment Payload').item.json.phone, customer_email: $('Build Appointment Payload').item.json.email, address: $('Build Appointment Payload').item.json.address, workiz_updated_at: $('Build Appointment Payload').item.json.updated_at, sync_source: 'workiz', sync_status: 'synced', last_synced_at: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "id": "save-sync-create",
+      "name": "Save Sync Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4256, 264]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $json;\nconsole.log('[SKIPPED] Job #' + job.serial_id + ' - duplicate found in GHL');\nreturn { json: { ...job, skipped: true, reason: 'duplicate_in_ghl' } };"
+      },
+      "id": "log-skip-duplicate",
+      "name": "Log Duplicate Skipped",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4032, 456]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?on_conflict=workiz_job_id,ghl_calendar_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workiz_job_id: $json.uuid, workiz_serial_id: $json.serial_id, ghl_appointment_id: $json.existingGhlEventId, ghl_calendar_id: $json.existingCalendarId || $json.ghlCalendarId, ghl_contact_id: $json.existingContactId || $json.contactId, calendar_name: $json.ghlCalendarName, job_datetime: $json.job_date_time, job_type: $json.job_type, job_status: $json.status, customer_name: ($json.first_name || '') + ' ' + ($json.last_name || ''), customer_phone: $json.phone, customer_email: $json.email, address: $json.address, workiz_updated_at: $json.updated_at, sync_source: 'workiz', sync_status: 'synced', last_synced_at: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "id": "save-sync-duplicate",
+      "name": "Save Sync Record (Duplicate)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4256, 456]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const job = $json;\nconst tags = job.parsedTags || [];\n\nfunction mapStatusToGHL(s) { \n  if (!s) return 'confirmed'; \n  s = s.trim(); \n  if (s.toUpperCase().includes('OMW')) return 'confirmed'; \n  const m = {'Submitted':'confirmed','In Progress':'showed','Canceled':'cancelled','Done':'showed','Yes Review':'showed'}; \n  return m[s] || 'confirmed'; \n}\n\n// Parse team - handle both string JSON and array\nlet team = []; \ntry { \n  team = typeof job.team === 'string' ? JSON.parse(job.team) : (job.team || []); \n} catch (e) { team = []; }\n\n// Extract team member names (Workiz uses 'Name' with capital N)\nconst teamNames = team.length > 0 \n  ? team.map(t => t.Name || t.name || t).join(', ') \n  : 'Unassigned';\n\nconst endTime = job.job_end_date_time || new Date(new Date(job.job_date_time).getTime() + 2*60*60*1000).toISOString();\nconst ghlStatus = mapStatusToGHL(job.status);\n\nconst desc = [\n  'Job #' + job.serial_id,\n  'Type: ' + (job.job_type || 'N/A'),\n  'Status: ' + (job.status || 'N/A'),\n  'Tags: ' + (tags.join(', ') || 'None'),\n  '',\n  'Address: ' + (job.address || '') + ', ' + (job.city || '') + ', ' + (job.state || '') + ' ' + (job.postal_code || ''),\n  'Phone: ' + (job.phone || 'N/A'),\n  'Email: ' + (job.email || 'N/A'),\n  '',\n  'Notes: ' + (job.job_notes || 'N/A'),\n  '',\n  'Team: ' + teamNames,\n  '',\n  'Total: $' + (job.job_total_price || '0.00'),\n  '',\n  '(Updated: ' + new Date().toISOString() + ')'\n].join('\\n');\n\nconst payload = { \n  calendarId: job.ghlCalendarId, \n  assignedUserId: '{{GHL_ASSIGNED_USER_ID}}', \n  startTime: job.job_date_time, \n  endTime: endTime, \n  title: '#' + job.serial_id + ' - ' + (job.first_name || '') + ' ' + (job.last_name || '') + ' - ' + (job.job_type || ''), \n  description: desc, \n  address: (job.address || '') + ', ' + (job.city || '') + ', ' + (job.state || '') + ' ' + (job.postal_code || ''), \n  appointmentStatus: ghlStatus, \n  ignoreFreeSlotValidation: true \n};\n\nconsole.log('[Update] Job #' + job.serial_id + ' -> ' + job.ghl_appointment_id);\nreturn { json: { ...job, updatePayload: JSON.stringify(payload), ghlStatus } };"
+      },
+      "id": "update-path",
+      "name": "Build Update Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1344, 264]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://services.leadconnectorhq.com/calendars/events/appointments/{{ $json.ghl_appointment_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{GHL_API_TOKEN}}" },
+            { "name": "Version", "value": "2021-04-15" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.updatePayload }}",
+        "options": {}
+      },
+      "id": "update-appointment",
+      "name": "Update GHL Appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1568, 264],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://jvflufcpcxlsnszlvolj.supabase.co/rest/v1/calendar_sync?workiz_job_id=eq.{{ $('Build Update Payload').item.json.uuid }}&ghl_calendar_id=eq.{{ $('Build Update Payload').item.json.ghlCalendarId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "{{SUPABASE_API_KEY}}" },
+            { "name": "Authorization", "value": "Bearer {{SUPABASE_API_KEY}}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ job_datetime: $('Build Update Payload').item.json.job_date_time, job_status: $('Build Update Payload').item.json.status, workiz_updated_at: $('Build Update Payload').item.json.updated_at, sync_status: 'synced', last_synced_at: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "id": "save-sync-update",
+      "name": "Update Sync Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1792, 264]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "console.log('[NoJobs] No jobs need syncing');\nreturn { json: { noJobs: true, timestamp: new Date().toISOString() } };"
+      },
+      "id": "log-no-jobs",
+      "name": "Log No Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [896, 456]
+    }
+  ],
+  "connections": {
+    "Every 5 Minutes": {
+      "main": [[
+        { "node": "Fetch Jobs Needing Sync", "type": "main", "index": 0 },
+        { "node": "Fetch Existing Sync Records", "type": "main", "index": 0 },
+        { "node": "Fetch Workiz Jobs (Orphan)", "type": "main", "index": 0 },
+        { "node": "Fetch Sync Records (Orphan)", "type": "main", "index": 0 }
+      ]]
+    },
+    "Fetch Jobs Needing Sync": { "main": [[{ "node": "Process Each Job", "type": "main", "index": 0 }]] },
+    "Fetch Existing Sync Records": { "main": [[{ "node": "Process Each Job", "type": "main", "index": 0 }]] },
+    "Fetch Workiz Jobs (Orphan)": { "main": [[{ "node": "Merge Orphan Data", "type": "main", "index": 0 }]] },
+    "Fetch Sync Records (Orphan)": { "main": [[{ "node": "Merge Orphan Data", "type": "main", "index": 1 }]] },
+    "Merge Orphan Data": { "main": [[{ "node": "Find Orphaned Records", "type": "main", "index": 0 }]] },
+    "Find Orphaned Records": { "main": [[{ "node": "Has Orphans?", "type": "main", "index": 0 }]] },
+    "Has Orphans?": { "main": [[{ "node": "Delete GHL Appointment", "type": "main", "index": 0 }], [{ "node": "Log No Orphans", "type": "main", "index": 0 }]] },
+    "Delete GHL Appointment": { "main": [[{ "node": "Delete Sync Record", "type": "main", "index": 0 }]] },
+    "Delete Sync Record": { "main": [[{ "node": "Log Deletion", "type": "main", "index": 0 }]] },
+    "Process Each Job": { "main": [[{ "node": "Has Jobs?", "type": "main", "index": 0 }]] },
+    "Has Jobs?": { "main": [[{ "node": "Is Calendar Change?", "type": "main", "index": 0 }], [{ "node": "Log No Jobs", "type": "main", "index": 0 }]] },
+    "Is Calendar Change?": { "main": [[{ "node": "Delete Old Calendar Appointment", "type": "main", "index": 0 }], [{ "node": "Is Update?", "type": "main", "index": 0 }]] },
+    "Delete Old Calendar Appointment": { "main": [[{ "node": "Delete Old Sync Record", "type": "main", "index": 0 }]] },
+    "Delete Old Sync Record": { "main": [[{ "node": "Prepare For New Calendar", "type": "main", "index": 0 }]] },
+    "Prepare For New Calendar": { "main": [[{ "node": "Search GHL Contact", "type": "main", "index": 0 }]] },
+    "Is Update?": { "main": [[{ "node": "Build Update Payload", "type": "main", "index": 0 }], [{ "node": "Search GHL Contact", "type": "main", "index": 0 }]] },
+    "Build Update Payload": { "main": [[{ "node": "Update GHL Appointment", "type": "main", "index": 0 }]] },
+    "Update GHL Appointment": { "main": [[{ "node": "Update Sync Record", "type": "main", "index": 0 }]] },
+    "Search GHL Contact": { "main": [[{ "node": "Prepare Contact Data", "type": "main", "index": 0 }]] },
+    "Prepare Contact Data": { "main": [[{ "node": "Need Create Contact?", "type": "main", "index": 0 }]] },
+    "Need Create Contact?": { "main": [[{ "node": "Create GHL Contact", "type": "main", "index": 0 }], [{ "node": "Build Appointment Payload", "type": "main", "index": 0 }]] },
+    "Create GHL Contact": { "main": [[{ "node": "Extract Contact ID", "type": "main", "index": 0 }]] },
+    "Extract Contact ID": { "main": [[{ "node": "Build Appointment Payload", "type": "main", "index": 0 }]] },
+    "Build Appointment Payload": { "main": [[{ "node": "Search GHL Calendar", "type": "main", "index": 0 }]] },
+    "Search GHL Calendar": { "main": [[{ "node": "Check Duplicate", "type": "main", "index": 0 }]] },
+    "Check Duplicate": { "main": [[{ "node": "Should Create?", "type": "main", "index": 0 }]] },
+    "Should Create?": { "main": [[{ "node": "Create GHL Appointment", "type": "main", "index": 0 }], [{ "node": "Log Duplicate Skipped", "type": "main", "index": 0 }]] },
+    "Create GHL Appointment": { "main": [[{ "node": "Save Sync Record", "type": "main", "index": 0 }]] },
+    "Log Duplicate Skipped": { "main": [[{ "node": "Save Sync Record (Duplicate)", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "_metadata": {
+    "exportedAt": "2025-12-12",
+    "note": "API keys replaced with placeholders for security. Replace {{SUPABASE_API_KEY}}, {{GHL_API_TOKEN}}, {{GHL_LOCATION_ID}}, and {{GHL_ASSIGNED_USER_ID}} with actual values."
+  }
+}

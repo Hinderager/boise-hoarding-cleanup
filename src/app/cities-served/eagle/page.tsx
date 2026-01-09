@@ -59,6 +59,8 @@ export default function EaglePage() {
         headline="Hoarding Cleanup in Eagle, Idaho"
         subheadline="We help Eagle families tackle hoarding situations. Discreet service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
       {/* Eagle-Specific Content Section */}

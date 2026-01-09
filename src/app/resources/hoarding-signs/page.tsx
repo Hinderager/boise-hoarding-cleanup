@@ -123,6 +123,7 @@ export default function HoardingSignsPage() {
             </div>
           </section>
 
+          <VisibleBreadcrumb />
           {/* Hoarding vs Collecting */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Hoarding vs. Collecting</h2>

@@ -58,6 +58,8 @@ export default function MeridianPage() {
         headline="Hoarding Cleanup in Meridian, Idaho"
         subheadline="We help Meridian families tackle hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

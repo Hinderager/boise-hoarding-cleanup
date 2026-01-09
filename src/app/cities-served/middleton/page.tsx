@@ -41,6 +41,8 @@ export default function MiddletonPage() {
         headline="Hoarding Cleanup in Middleton, Idaho"
         subheadline="We help Middleton families deal with hoarding situations. Respectful service, fair prices."
       />
+      <VisibleBreadcrumb />
+
       <QuickQuoteBar />
 
 

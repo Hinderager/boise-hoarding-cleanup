@@ -20,6 +20,10 @@ export default function CommercialPage() {
           </p>
 
 
+          <VisibleBreadcrumb />
+
+
+
           <QuickQuoteBar />
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gunmetal mb-6">Who We Help</h2>

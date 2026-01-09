@@ -62,6 +62,7 @@ const faqs = [
 export default function FAQPage() {
   return (
     <main className="pt-20">
+      <VisibleBreadcrumb />
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-gunmetal mb-6">Frequently Asked Questions</h1>
