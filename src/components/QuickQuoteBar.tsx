@@ -161,7 +161,8 @@ export function QuickQuoteBar() {
           firstName,
           lastName,
           phone,
-          source: 'ms-hoarding',
+          source: 'microsite - hoarding cleanup',
+          tags: ['microsite', 'hoarding cleanup'],
           message,
           photoUrls
         })
@@ -293,7 +294,7 @@ export function QuickQuoteBar() {
       setSubmitStatus('success')
 
       setTimeout(() => {
-        setFormData({ name: '', phone: '', email: '', message: '' })
+        setFormData({ name: '', phone: '', email: '', message: '', website: '' })
         setPhotos([])
         setPhotoPreviews([])
         setIsExpanded(false)
@@ -338,6 +339,20 @@ export function QuickQuoteBar() {
       <div className="max-w-xl mx-auto px-4">
         <form onSubmit={isExpanded ? handleSubmit : handleInitialClick}>
           {/* Initial Fields - Always Visible */}
+          {/* Honeypot field - hidden from real users, catches bots */}
+          <div style={{ position: 'absolute', left: '-9999px', height: 0, overflow: 'hidden' }} aria-hidden="true">
+            <label htmlFor="website">Website</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              value={formData.website}
+              onChange={handleInputChange}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-3 mb-3">
             <input
               type="text"
