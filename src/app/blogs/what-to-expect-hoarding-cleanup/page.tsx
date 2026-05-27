@@ -164,7 +164,7 @@ export default function BlogPost() {
             <h2>What Does It Cost?</h2>
 
             <p>
-              Depends on the scope. Square footage, how much stuff, disposal fees, cleaning needed. In our area, most residential jobs run $500 for smaller cleanouts up to $5,000+ for severe situations.
+              Depends on the scope. Square footage, how much stuff, disposal fees, cleaning needed. Smaller cleanouts are the easiest end of the range; severe situations with biohazards or structural concerns are the most involved.
             </p>
 
             <p>

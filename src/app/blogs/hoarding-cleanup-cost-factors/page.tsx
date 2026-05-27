@@ -74,15 +74,15 @@ export default function HoardingCleanupCostFactors() {
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Minor hoarding (Level 1-2):</strong> $1,000-$3,000. Clutter but walkable paths, minimal hazards, one room or small area affected. Often completed in a day.
+              <strong>Minor hoarding (Level 1-2):</strong> Clutter but walkable paths, minimal hazards, one room or small area affected. Often completed in a day. The most budget-friendly end of the range.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Moderate hoarding (Level 3):</strong> $3,000-$8,000. Multiple rooms affected, narrow or blocked pathways, some structural concerns or pest issues. Typically 2-3 days of work.
+              <strong>Moderate hoarding (Level 3):</strong> Multiple rooms affected, narrow or blocked pathways, some structural concerns or pest issues. Typically 2-3 days of work.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Severe hoarding (Level 4-5):</strong> $8,000-$25,000+. Whole house affected, rooms unusable, significant biohazard concerns, possible structural damage. Can take a week or more.
+              <strong>Severe hoarding (Level 4-5):</strong> Whole house affected, rooms unusable, significant biohazard concerns, possible structural damage. Can take a week or more. The most involved end of the range.
             </p>
 
             <p className="text-gray-600 leading-relaxed">
@@ -178,11 +178,11 @@ export default function HoardingCleanupCostFactors() {
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Biohazard remediation.</strong> Professional sanitization for biological hazards is a specialized service, often $2,000-$10,000+ depending on extent.
+              <strong>Biohazard remediation.</strong> Professional sanitization for biological hazards is a specialized service. The cost depends on the extent of contamination and the area involved.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Pest control.</strong> Rodent or insect infestations often need professional treatment after cleanup. Budget $500-$2,500 depending on severity.
+              <strong>Pest control.</strong> Rodent or insect infestations often need professional treatment after cleanup. Cost depends on severity and the type of pest.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
@@ -190,7 +190,7 @@ export default function HoardingCleanupCostFactors() {
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Deep cleaning.</strong> After items are removed, professional deep cleaning is usually needed. Expect $500-$2,000 for a whole house.
+              <strong>Deep cleaning.</strong> After items are removed, professional deep cleaning is usually needed. Whole-house cleanings are priced based on square footage and condition.
             </p>
 
             <p className="text-gray-600 leading-relaxed">
@@ -244,7 +244,7 @@ export default function HoardingCleanupCostFactors() {
             </h2>
 
             <p className="text-gray-600 leading-relaxed mb-6">
-              Hoarding cleanup costs vary widely—from a few thousand dollars for minor situations to $25,000+ for severe cases. The main drivers are volume, biohazards, and time required.
+              Hoarding cleanup costs vary widely. Minor situations are the most affordable end of the range, while severe cases with biohazards or structural issues are the most involved. The main drivers are volume, biohazards, and time required.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-6">
