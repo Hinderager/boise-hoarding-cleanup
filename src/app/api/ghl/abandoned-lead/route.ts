@@ -6,7 +6,8 @@ interface HoardingLeadRequest {
   firstName: string
   lastName: string
   phone: string
-  source: 'hoarding' | 'ms-hoarding'
+  source: string
+  tags?: string[]
   message?: string  // Customer's message (optional)
   photoUrls?: string[]  // Photo URLs from Supabase storage (optional)
 }
@@ -40,7 +41,8 @@ export async function POST(request: NextRequest) {
         firstName: body.firstName || 'Unknown',
         lastName: body.lastName || '',
         phone: digits,
-        source: body.source || 'ms-hoarding',
+        source: body.source || 'microsite - hoarding cleanup',
+        tags: body.tags || [],
         message: body.message || '',
         photoUrls: body.photoUrls || []
       })
