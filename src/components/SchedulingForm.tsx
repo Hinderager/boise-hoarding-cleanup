@@ -190,7 +190,7 @@ export function SchedulingForm({ city = 'Boise' }: SchedulingFormProps) {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    placeholder="(208) 555-1234"
+                    placeholder="(208) 943-5231"
                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-light-blue focus:border-transparent outline-none transition-all"
                   />
                 </div>
