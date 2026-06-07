@@ -6,7 +6,7 @@ import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 
 export const metadata: Metadata = {
-  title: 'Hoarding Cleanup Paramount Meridian | Top Shelf',
+  title: 'Hoarding Cleanup Paramount Meridian | Boise Hoarding Cleanup',
   description: 'Hoarding Cleanup services in Paramount, Meridian, Idaho. Local team, fair prices, same-day service available. Call (208) 943-5231.',
   keywords: ['hoarding cleanup Paramount', 'hoarding cleanup Paramount Meridian', 'Paramount meridian hoarding cleanup'],
   alternates: {

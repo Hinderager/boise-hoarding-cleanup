@@ -25,7 +25,7 @@ const oswald = Oswald({
 export const metadata: Metadata = {
   metadataBase: new URL('https://boise-hoarding-cleanup.com'),
   title: {
-    default: 'Boise Hoarding Cleanup | Compassionate & Discreet | Top Shelf',
+    default: 'Boise Hoarding Cleanup | Compassionate & Discreet',
     template: '%s | Boise Hoarding Help',
   },
   description: 'Compassionate hoarding cleanup services in Boise, Meridian, Nampa, Caldwell & Eagle Idaho. We help families dealing with hoarding disorder through supportive, professional cleanout services. Licensed & insured. Same-day service available. Call (208) 943-5231.',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: 'Hoarding Cleanup Services | Boise, Meridian, Nampa Idaho',
     description: 'Non-judgmental hoarding cleanup services in the Treasure Valley. We help families navigate difficult situations with compassion and respect. Licensed, insured, and discreet. Same-day service available.',
     url: 'https://boise-hoarding-cleanup.com',
-    siteName: 'Top Shelf Hoarding Cleanup',
+    siteName: 'Boise Hoarding Cleanup',
     locale: 'en_US',
     type: 'website',
   },
@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${oswald.variable} ${montserrat.variable} scroll-smooth`}>
         <StructuredData />
-        <BreadcrumbSchema siteName="Top Shelf Hoarding Cleanup" siteUrl="https://boise-hoarding-cleanup.com" />
+        <BreadcrumbSchema siteName="Boise Hoarding Cleanup" siteUrl="https://boise-hoarding-cleanup.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />

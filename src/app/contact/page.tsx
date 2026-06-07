@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
-import { Phone, Mail, MapPin, Clock, Shield } from 'lucide-react'
+import { Phone, MapPin, Clock, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Contact Us | Boise Hoarding Cleanup',
@@ -41,15 +41,6 @@ export default function ContactPage() {
                   <h3 className="font-bold text-gunmetal mb-1">Phone</h3>
                   <a href="tel:2089435231" className="text-light-blue text-lg font-semibold hover:underline">(208) 943-5231</a>
                   <p className="text-sm text-gray-600 mt-1">Call or text anytime</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-light-blue rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-gunmetal mb-1">Email</h3>
-                  <a href="mailto:info@topshelfpros.com" className="text-light-blue hover:underline">info@topshelfpros.com</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">

@@ -6,7 +6,7 @@ import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 
 export const metadata: Metadata = {
-  title: 'Hoarding Cleanup Downtown Nampa Nampa | Top Shelf',
+  title: 'Hoarding Cleanup Downtown Nampa Nampa | Boise Hoarding Cleanup',
   description: 'Hoarding Cleanup services in Downtown Nampa, Nampa, Idaho. Local team, fair prices, same-day service available. Call (208) 943-5231.',
   keywords: ['hoarding cleanup Downtown Nampa', 'hoarding cleanup Downtown Nampa Nampa', 'Downtown Nampa nampa hoarding cleanup'],
   alternates: {

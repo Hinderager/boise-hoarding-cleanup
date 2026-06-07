@@ -6,7 +6,7 @@ import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 
 export const metadata: Metadata = {
-  title: 'Hoarding Cleanup Downtown Boise Boise | Top Shelf',
+  title: 'Hoarding Cleanup Downtown Boise Boise | Boise Hoarding Cleanup',
   description: 'Hoarding Cleanup services in Downtown Boise, Boise, Idaho. Local team, fair prices, same-day service available. Call (208) 943-5231.',
   keywords: ['hoarding cleanup Downtown Boise', 'hoarding cleanup Downtown Boise Boise', 'Downtown Boise boise hoarding cleanup'],
   alternates: {

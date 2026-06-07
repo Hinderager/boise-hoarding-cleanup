@@ -6,7 +6,7 @@ import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 
 export const metadata: Metadata = {
-  title: 'Hoarding Cleanup Lochsa Falls Meridian | Top Shelf',
+  title: 'Hoarding Cleanup Lochsa Falls Meridian | Boise Hoarding Cleanup',
   description: 'Hoarding Cleanup services in Lochsa Falls, Meridian, Idaho. Local team, fair prices, same-day service available. Call (208) 943-5231.',
   keywords: ['hoarding cleanup Lochsa Falls', 'hoarding cleanup Lochsa Falls Meridian', 'Lochsa Falls meridian hoarding cleanup'],
   alternates: {
