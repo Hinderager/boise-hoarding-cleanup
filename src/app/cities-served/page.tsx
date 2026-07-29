@@ -35,6 +35,26 @@ const cities = [
     "name": "Eagle",
     "slug": "eagle",
     "county": "Ada County"
+  },
+  {
+    "name": "Star",
+    "slug": "star",
+    "county": "Ada County"
+  },
+  {
+    "name": "Kuna",
+    "slug": "kuna",
+    "county": "Ada County"
+  },
+  {
+    "name": "Garden City",
+    "slug": "garden-city",
+    "county": "Ada County"
+  },
+  {
+    "name": "Middleton",
+    "slug": "middleton",
+    "county": "Canyon County"
   }
 ]
 

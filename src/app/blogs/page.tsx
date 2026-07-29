@@ -41,6 +41,36 @@ const blogPosts = [
     "title": "After the Cleanup: Preventing Hoarding Relapse",
     "excerpt": "Cleanup is just the first step. Here's how to support long-term recovery.",
     "image": "/generated/after-hoarding-cleanup.webp"
+  },
+  {
+    "slug": "what-to-expect-hoarding-cleanup",
+    "title": "What to Expect During a Professional Hoarding Cleanup",
+    "excerpt": "From the first walkthrough to the final clean, here's how the whole process actually goes.",
+    "image": "/generated/hoarding-cleanup-process.webp"
+  },
+  {
+    "slug": "5-signs-loved-one-needs-hoarding-help",
+    "title": "5 Signs Your Loved One May Need Hoarding Help",
+    "excerpt": "It's hard to know when clutter has become something more. These are the signs worth paying attention to.",
+    "image": "/generated/helping-hoarder-family.webp"
+  },
+  {
+    "slug": "hoarding-vs-clutter-difference",
+    "title": "Hoarding vs Clutter: Understanding the Difference",
+    "excerpt": "Is it just a messy house, or is it hoarding? Here's where the line actually falls.",
+    "image": "/generated/understanding-hoarding.webp"
+  },
+  {
+    "slug": "health-risks-hoarding-cleanup",
+    "title": "The Health Risks of Hoarding: Why Professional Cleanup Matters",
+    "excerpt": "Mold, pests, air quality, and fire risk. The hazards in a hoarded home aren't always the ones you can see.",
+    "image": "/generated/deep-cleaning.webp"
+  },
+  {
+    "slug": "supporting-family-through-cleanup",
+    "title": "How to Support a Family Member Through Hoarding Cleanup",
+    "excerpt": "The cleanup is the easy part. Here's how to help someone through the harder side of it.",
+    "image": "/generated/ongoing-maintenance.webp"
   }
 ]
 
