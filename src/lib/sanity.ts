@@ -106,6 +106,228 @@ export interface Location {
   backLabel?: string
 }
 
+/* ------------------------------------------------------------------ *
+ * Service and page content
+ *
+ * These documents are shared with the client-site template that renders
+ * reviewmonster.com/site/pmm, which reads `title`, `body`, `sections`,
+ * `seoTitle` and friends. This site therefore reads its own field names —
+ * `metaTitle`, `pageHeading`, `pageSections` — so the two can describe the
+ * same page differently without either overwriting the other.
+ * ------------------------------------------------------------------ */
+
+/**
+ * A run of text, optionally a link. Lets a paragraph carry inline anchors.
+ * Distinct from `Span` above, which is portable text's own span type.
+ */
+export interface TextSpan {
+  _key?: string
+  text: string
+  href?: string
+  bold?: boolean
+}
+
+/** A list item: an optional bold lead-in ("Family history:") then the rest. */
+export interface RichItem {
+  _key: string
+  label?: string
+  spans?: TextSpan[]
+  text?: string
+}
+
+export interface Callout {
+  tone?: 'note' | 'warning'
+  icon?: string
+  title?: string
+  text?: string
+}
+
+export interface StepCard {
+  _key: string
+  title: string
+  text?: string
+  paras?: string[]
+}
+
+/**
+ * One block of a service page. `kind` says which of the payload fields is
+ * populated — the four service pages genuinely are different shapes, and
+ * pretending otherwise is what lost content the first time round.
+ */
+export interface ServiceSection {
+  _key: string
+  callout?: Callout
+  heading?: string
+  kind: 'paras' | 'bullets' | 'checkGrid' | 'stepCards' | 'numberRows'
+  paras?: string[]
+  bullets?: RichItem[]
+  items?: string[]
+  steps?: StepCard[]
+  /** The one or two sections whose body carried an extra bottom margin. */
+  spaced?: boolean
+}
+
+export interface ServicePage {
+  _id: string
+  slug: string
+  metaTitle?: string
+  metaDescription?: string
+  pageHeading?: string
+  pageLead?: string
+  pageSections?: ServiceSection[]
+  pageCtaHeading?: string
+  pageCtaBody?: string
+  ctaWide?: boolean
+}
+
+/** A card in one of the index grids (services, resources, about-us). */
+export interface IndexCard {
+  _key: string
+  title: string
+  href: string
+  icon?: string
+  description?: string
+}
+
+const SERVICE_FIELDS = `_id, "slug": slug.current, metaTitle, metaDescription, pageHeading,
+  pageLead, pageSections, pageCtaHeading, pageCtaBody, ctaWide`
+
+export function getServicePage(slug: string) {
+  return sanityQuery<ServicePage | null>(
+    `*[_type == "service" && clientId == $c && slug.current == $slug][0] { ${SERVICE_FIELDS} }`,
+    { c: CLIENT_ID, slug }
+  )
+}
+
+export function getServiceSlugs() {
+  return sanityQuery<string[]>(`*[_type == "service" && clientId == $c].slug.current`, {
+    c: CLIENT_ID,
+  })
+}
+
+/** An index page whose body is a grid of cards (services, resources, about-us). */
+export interface IndexPage {
+  _id: string
+  metaTitle?: string
+  metaDescription?: string
+  pageHeading?: string
+  pageLead?: string
+  cards?: IndexCard[]
+}
+
+/**
+ * A long-form content page.
+ *
+ * Every field is optional and each route reads only the ones it renders. The
+ * pages genuinely are different from one another — a shared "blocks" soup
+ * would make them editable but unreadable in the CMS, and these are pages the
+ * office has to be able to find things in.
+ */
+export interface ContentPage {
+  _id: string
+  metaTitle?: string
+  metaDescription?: string
+  metaKeywords?: string[]
+  ogTitle?: string
+  ogDescription?: string
+  pageHeading?: string
+  pageLead?: string
+  /** Hero centred rather than left-aligned. */
+  centeredHero?: boolean
+
+  cards?: IndexCard[]
+  related?: IndexCard[]
+  faqs?: { _key: string; question: string; answer: string }[]
+
+  /* cleanup-process */
+  steps?: { _key: string; title: string; paras: string[] }[]
+  gridHeading?: string
+  gridItems?: string[]
+
+  /* hoarding-signs */
+  warningSignsHeading?: string
+  warningSigns?: { _key: string; title: string; text: string }[]
+  compareHeading?: string
+  compareIntro?: string
+  compare?: { _key: string; tone: 'good' | 'bad'; title: string; items: string[] }[]
+  levelsHeading?: string
+  levelsIntro?: string
+  levels?: { _key: string; label: string; text: string; color: string }[]
+  helpHeading?: string
+  helpIntro?: string
+  helpItems?: string[]
+  helpOutro?: string
+
+  /* helping-a-hoarder */
+  understandHeading?: string
+  understandParas?: string[]
+  understandIntro?: string
+  understandItems?: string[]
+  tipsHeading?: string
+  tips?: { _key: string; icon: string; title: string; text: string }[]
+  sayTitle?: string
+  sayItems?: string[]
+  proHeading?: string
+  proIntro?: string
+  proItems?: RichItem[]
+  proOutro?: string
+  selfHeading?: string
+  selfIntro?: string
+  selfItems?: string[]
+
+  /* about-us */
+  approachHeading?: string
+  approachParas?: string[]
+  reasons?: { _key: string; title: string; text: string }[]
+  goodHeading?: string
+  goodIntro?: string
+  goodItems?: RichItem[]
+  goodOutro?: string
+  quickFacts?: { _key: string; icon: string; title: string; text: string }[]
+  richBlocks?: RichBlock[]
+  linksTitle?: string
+  links?: { _key: string; text: string; href: string }[]
+
+  /* testimonials */
+  rating?: number
+  totalReviews?: number
+  reviewsIntro?: string
+  reviews?: { _key: string; author: string; rating: number; when: string; text: string }[]
+  outroPrefix?: string
+  outroBold?: string
+  outroSuffix?: string
+  outroSecond?: string
+  bookHeading?: string
+
+  pageCtaHeading?: string
+  pageCtaBody?: string
+  ctaWide?: boolean
+}
+
+/** Prose that carries inline links, which a plain string cannot. */
+export interface RichBlock {
+  _key: string
+  type: 'h2' | 'p' | 'ul' | 'ol'
+  text?: string
+  spans?: TextSpan[]
+  items?: RichItem[]
+}
+
+export function getContentPage(slug: string) {
+  return sanityQuery<ContentPage | null>(
+    `*[_type == "page" && clientId == $c && slug.current == $slug][0]`,
+    { c: CLIENT_ID, slug }
+  )
+}
+
+export function getIndexPage(slug: string) {
+  return sanityQuery<IndexPage | null>(
+    `*[_type == "page" && clientId == $c && slug.current == $slug][0] {
+      _id, metaTitle, metaDescription, pageHeading, pageLead, cards }`,
+    { c: CLIENT_ID, slug }
+  )
+}
+
 export async function sanityQuery<T>(
   query: string,
   params: Record<string, unknown> = {}
