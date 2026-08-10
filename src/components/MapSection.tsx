@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { MapPin, Phone, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-export function MapSection() {
+export function MapSection({ hours = [] }: { hours?: string[] }) {
   return (
     <section className="py-20 bg-gradient-to-b from-blue-50/30 to-slate-100/50 relative overflow-hidden">
       {/* Gradient dot pattern background */}
@@ -58,8 +58,9 @@ export function MapSection() {
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Hours</h4>
-                <p className="text-gray-700">Monday - Saturday: 8:00 AM - 9:00 PM</p>
-                <p className="text-gray-700">Sunday: 12:00 PM - 9:00 PM</p>
+                {hours.map((line) => (
+                  <p key={line} className="text-gray-700">{line}</p>
+                ))}
               </div>
             </div>
 

@@ -325,7 +325,14 @@ export interface SiteSettings {
   sitePhone?: string
   sitePhoneHref?: string
   addressLines?: string[]
+  /** Short form, footer: "Mon-Sun: 8am - 9pm". */
   hoursLines?: string[]
+  /** Long form, contact page and map card: "Monday - Sunday: 8:00 AM - 9:00 PM". */
+  hoursLong?: string[]
+  /** What the schema Google reads should say. */
+  hoursDays?: string[]
+  hoursOpens?: string
+  hoursCloses?: string
   reviewRating?: number
   reviewCount?: number
 

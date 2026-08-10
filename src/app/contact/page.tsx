@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { SchedulingForm } from '@/components/SchedulingForm'
 import { Phone, MapPin, Clock, Shield } from 'lucide-react'
+import { getSiteSettings } from '@/lib/sanity'
 
 export const metadata: Metadata = {
   title: 'Contact Us | Boise Hoarding Cleanup',
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://boise-hoarding-cleanup.com/contact' },
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings()
+
   return (
     <main className="pt-20">
       <VisibleBreadcrumb />
@@ -59,8 +62,9 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-gunmetal mb-1">Availability</h3>
-                  <p className="text-gray-600">Monday - Saturday: 7am - 7pm</p>
-                  <p className="text-gray-600">Sunday: By appointment</p>
+                  {(settings?.hoursLong || []).map((line) => (
+                    <p key={line} className="text-gray-600">{line}</p>
+                  ))}
                   <p className="text-sm text-gray-500 mt-1">We respond to messages within 24 hours</p>
                 </div>
               </div>

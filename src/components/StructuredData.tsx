@@ -1,3 +1,5 @@
+import { getSiteSettings } from '@/lib/sanity'
+
 // Coordinates for each city
 const cityCoordinates: Record<string, { lat: number; lng: number }> = {
   'Boise': { lat: 43.6150, lng: -116.2023 },
@@ -17,8 +19,12 @@ const faqData = [
   { question: 'What areas do you serve?', answer: 'We serve Boise, Meridian, Nampa, Caldwell, Eagle, and the Treasure Valley. Studies show hoarding affects approximately 19,000 people in the Boise metro area based on national prevalence rates.' }
 ]
 
-export function StructuredData({ city = 'Boise' }: { city?: string }) {
+export async function StructuredData({ city = 'Boise' }: { city?: string }) {
   const coords = cityCoordinates[city] || cityCoordinates['Boise']
+  // Opening hours and the rating come from Sanity so the schema Google reads
+  // cannot drift away from what the footer, contact page and map card say —
+  // which is exactly what had happened: five spots, five different answers.
+  const settings = await getSiteSettings()
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -56,16 +62,16 @@ export function StructuredData({ city = 'Boise' }: { city?: string }) {
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "07:00",
-        "closes": "19:00"
+        "dayOfWeek": settings?.hoursDays,
+        "opens": settings?.hoursOpens,
+        "closes": settings?.hoursCloses
       }
     ],
     "sameAs": [],
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "392"
+      "ratingValue": settings?.reviewRating?.toFixed(1),
+      "reviewCount": String(settings?.reviewCount)
     }
   }
 

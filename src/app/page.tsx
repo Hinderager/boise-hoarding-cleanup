@@ -32,7 +32,7 @@ export default async function Home() {
       <ServicesShowcase />
       <GoogleReviews />
       <FAQSection />
-      <MapSection />
+      <MapSection hours={settings?.hoursLong} />
     </main>
   )
 }
