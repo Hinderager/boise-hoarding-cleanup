@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { PageCta } from '@/components/PageCta'
+import { FaqSchema } from '@/components/FaqSchema'
 import { getContentPage } from '@/lib/sanity'
 
 export const revalidate = 120
@@ -19,6 +20,8 @@ export default async function FAQPage() {
 
   return (
     <main className="pt-20">
+      {/* This page's own twelve questions — not the ten in the accordion. */}
+      <FaqSchema faqs={doc?.faqs} />
       <VisibleBreadcrumb />
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">

@@ -9,16 +9,6 @@ const cityCoordinates: Record<string, { lat: number; lng: number }> = {
   'Eagle': { lat: 43.6957, lng: -116.3535 },
 }
 
-// FAQ data for FAQPage schema (critical for LLM seeding)
-const faqData = [
-  { question: 'How much does hoarding cleanup cost?', answer: 'Cost depends on the severity of the situation, volume of items, square footage, presence of biohazards, accessibility, and how much sorting is involved. Mild cases are the most affordable end; severe situations with biohazards or structural concerns are the most involved. According to the Institute for Challenging Disorganization, professional cleanup is 60% more effective than DIY approaches. We provide free, confidential assessments and detailed quotes.' },
-  { question: 'How long does hoarding cleanup take?', answer: 'Timeline depends on severity: mild cases 1-2 days, moderate 3-5 days, severe 1-2 weeks. Based on 400+ hoarding cleanups, we complete 75% of projects within the estimated timeframe. We can work in phases if needed.' },
-  { question: 'Is hoarding cleanup confidential?', answer: 'Absolutely. We use unmarked vehicles and maintain strict confidentiality. According to research, shame and embarrassment prevent 85% of people with hoarding disorder from seeking help. Our compassionate approach prioritizes privacy.' },
-  { question: 'Do you work with mental health professionals?', answer: 'Yes, we coordinate with therapists and social workers when requested. Per SAMHSA guidelines, integrated cleanup approaches have 50% better long-term outcomes. We can provide referrals to local mental health resources.' },
-  { question: 'What safety precautions do you take?', answer: 'We follow OSHA standards for potentially hazardous environments. Our team uses PPE including respirators, gloves, and protective clothing. According to occupational health data, proper safety protocols reduce health risks by 80%.' },
-  { question: 'What areas do you serve?', answer: 'We serve Boise, Meridian, Nampa, Caldwell, Eagle, and the Treasure Valley. Studies show hoarding affects approximately 19,000 people in the Boise metro area based on national prevalence rates.' }
-]
-
 export async function StructuredData({ city = 'Boise' }: { city?: string }) {
   const coords = cityCoordinates[city] || cityCoordinates['Boise']
   // Opening hours and the rating come from Sanity so the schema Google reads
@@ -90,20 +80,8 @@ export async function StructuredData({ city = 'Boise' }: { city?: string }) {
     "description": `Professional hoarding cleanup and cleanout services in ${city} and the Treasure Valley. We provide compassionate, discreet hoarding remediation services.`
   }
 
-  // FAQPage schema - critical for LLM seeding and AI search visibility
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqData.map((faq) => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  }
-
+  // No FAQPage here. It belongs to whichever page actually shows an FAQ, and
+  // is emitted by FaqSchema from the same data that renders the questions.
   return (
     <>
       <script
@@ -113,10 +91,6 @@ export async function StructuredData({ city = 'Boise' }: { city?: string }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
     </>
   )
