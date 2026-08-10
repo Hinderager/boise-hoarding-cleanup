@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getPosts, imageUrl } from '@/lib/sanity'
 
 export const metadata: Metadata = {
   title: 'Hoarding Cleanup Pros Blog | Tips & Guides for Hoarding cleanup',
@@ -11,70 +12,12 @@ export const metadata: Metadata = {
   },
 }
 
-const blogPosts = [
-  {
-    "slug": "understanding-hoarding-disorder",
-    "title": "Understanding Hoarding Disorder: What Family Members Should Know",
-    "excerpt": "Hoarding isn't about being messy. Here's what you need to understand before starting a cleanup.",
-    "image": "/generated/understanding-hoarding.webp"
-  },
-  {
-    "slug": "hoarding-cleanup-process",
-    "title": "What to Expect During a Hoarding Cleanup",
-    "excerpt": "Professional hoarding cleanup follows a specific process. Here's how it typically works.",
-    "image": "/generated/hoarding-cleanup-process.webp"
-  },
-  {
-    "slug": "helping-hoarder-family-member",
-    "title": "How to Help a Family Member Who Hoards",
-    "excerpt": "You want to help, but pushing too hard backfires. Here's a compassionate approach.",
-    "image": "/generated/helping-hoarder-family.webp"
-  },
-  {
-    "slug": "hoarding-cleanup-cost-factors",
-    "title": "Hoarding Cleanup Costs: What Affects the Price?",
-    "excerpt": "Every hoarding situation is different. Here's what determines the cost of professional cleanup.",
-    "image": "/generated/hoarding-cleanup-costs.webp"
-  },
-  {
-    "slug": "after-hoarding-cleanup",
-    "title": "After the Cleanup: Preventing Hoarding Relapse",
-    "excerpt": "Cleanup is just the first step. Here's how to support long-term recovery.",
-    "image": "/generated/after-hoarding-cleanup.webp"
-  },
-  {
-    "slug": "what-to-expect-hoarding-cleanup",
-    "title": "What to Expect During a Professional Hoarding Cleanup",
-    "excerpt": "From the first walkthrough to the final clean, here's how the whole process actually goes.",
-    "image": "/generated/hoarding-cleanup-process.webp"
-  },
-  {
-    "slug": "5-signs-loved-one-needs-hoarding-help",
-    "title": "5 Signs Your Loved One May Need Hoarding Help",
-    "excerpt": "It's hard to know when clutter has become something more. These are the signs worth paying attention to.",
-    "image": "/generated/helping-hoarder-family.webp"
-  },
-  {
-    "slug": "hoarding-vs-clutter-difference",
-    "title": "Hoarding vs Clutter: Understanding the Difference",
-    "excerpt": "Is it just a messy house, or is it hoarding? Here's where the line actually falls.",
-    "image": "/generated/understanding-hoarding.webp"
-  },
-  {
-    "slug": "health-risks-hoarding-cleanup",
-    "title": "The Health Risks of Hoarding: Why Professional Cleanup Matters",
-    "excerpt": "Mold, pests, air quality, and fire risk. The hazards in a hoarded home aren't always the ones you can see.",
-    "image": "/generated/deep-cleaning.webp"
-  },
-  {
-    "slug": "supporting-family-through-cleanup",
-    "title": "How to Support a Family Member Through Hoarding Cleanup",
-    "excerpt": "The cleanup is the easy part. Here's how to help someone through the harder side of it.",
-    "image": "/generated/ongoing-maintenance.webp"
-  }
-]
+// Posts come from Sanity, so the daily auto-blog run appears here on its own.
+export const revalidate = 120
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
+  const posts = await getPosts()
+
   return (
     <main className="pt-20">
       {/* Hero Section */}
@@ -102,34 +45,39 @@ export default function BlogsPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <article key={post.slug} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <Link href={`/blogs/${post.slug}`}>
-                  <div className="relative h-48">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h2 className="text-xl font-bold text-gunmetal mb-2 hover:text-dark-blue transition-colors">
-                      {post.title}
-                    </h2>
-                    <p className="text-gray-600 mb-4">
-                      {post.excerpt}
-                    </p>
-                    <span className="inline-flex items-center text-dark-blue font-semibold">
-                      Read More
-                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </span>
-                  </div>
-                </Link>
-              </article>
-            ))}
+            {posts.map((post) => {
+              const img = imageUrl(post.mainImage, 800)
+              return (
+                <article key={post.slug} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <Link href={`/blogs/${post.slug}`}>
+                    {img && (
+                      <div className="relative h-48">
+                        <Image
+                          src={img}
+                          alt={post.imageAlt || post.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <h2 className="text-xl font-bold text-gunmetal mb-2 hover:text-dark-blue transition-colors">
+                        {post.title}
+                      </h2>
+                      <p className="text-gray-600 mb-4">
+                        {post.excerpt}
+                      </p>
+                      <span className="inline-flex items-center text-dark-blue font-semibold">
+                        Read More
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </Link>
+                </article>
+              )
+            })}
           </div>
         </div>
       </section>

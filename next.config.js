@@ -11,6 +11,13 @@ const nextConfig = {
         hostname: 'topshelfpros.com',
         pathname: '/images/**',
       },
+      // Blog images now live in Sanity, so the daily auto-blog post can bring
+      // its own featured image without anything being committed here.
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/images/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],

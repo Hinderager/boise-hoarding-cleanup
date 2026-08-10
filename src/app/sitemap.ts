@@ -1,6 +1,11 @@
 import { MetadataRoute } from 'next'
+import { getPostSlugs } from '@/lib/sanity'
 
 const baseUrl = 'https://boise-hoarding-cleanup.com'
+
+// Blog slugs come from Sanity so a post published by the daily auto-blog run
+// is in the sitemap without anyone editing this file.
+export const revalidate = 120
 
 const cityPages = [
   'boise',
@@ -51,7 +56,7 @@ const resourcePages = [
   'hoarding-signs',
 ]
 
-const blogPosts = [
+const FALLBACK_BLOG_POSTS = [
   '5-signs-loved-one-needs-hoarding-help',
   'after-hoarding-cleanup',
   'health-risks-hoarding-cleanup',
@@ -64,7 +69,10 @@ const blogPosts = [
   'what-to-expect-hoarding-cleanup',
 ]
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Fall back to the known slugs if Sanity is unreachable — a broken sitemap
+  // is worse than a slightly stale one.
+  const blogPosts = await getPostSlugs().catch(() => FALLBACK_BLOG_POSTS)
   const lastModified = new Date()
 
   return [
