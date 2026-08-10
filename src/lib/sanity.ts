@@ -313,6 +313,57 @@ export interface RichBlock {
   items?: RichItem[]
 }
 
+/**
+ * Settings shared by every page: contact details, the Google rating, the FAQ
+ * accordion and the two home-page service sections.
+ *
+ * These sit alongside the client-site template's own `phone` / `hours` /
+ * `tagline` on the same document rather than replacing them — the template
+ * describes the same business in its own words, and the two must not fight.
+ */
+export interface SiteSettings {
+  sitePhone?: string
+  sitePhoneHref?: string
+  addressLines?: string[]
+  hoursLines?: string[]
+  reviewRating?: number
+  reviewCount?: number
+
+  heroCities?: string
+  heroTagline?: string
+  heroConsultHeading?: string
+  heroBadges?: { _key: string; icon: string; label: string }[]
+
+  servicesHeading?: string
+  servicesLead?: string
+  homeServices?: { _key: string; icon: string; title: string; description: string }[]
+
+  showcaseHeading?: string
+  showcaseLead?: string
+  homeShowcase?: {
+    _key: string
+    title: string
+    description: string
+    image: string
+    link: string
+    buttonText: string
+  }[]
+
+  faqHeading?: string
+  siteFaqs?: { _key: string; question: string; answer: string }[]
+
+  footerServices?: string[]
+  footerCompany?: { _key: string; label: string; href: string }[]
+  footerAreas?: { _key: string; label: string; href: string }[]
+}
+
+export function getSiteSettings() {
+  return sanityQuery<SiteSettings | null>(
+    `*[_type == "siteSettings" && clientId == $c][0]`,
+    { c: CLIENT_ID }
+  )
+}
+
 export function getContentPage(slug: string) {
   return sanityQuery<ContentPage | null>(
     `*[_type == "page" && clientId == $c && slug.current == $slug][0]`,

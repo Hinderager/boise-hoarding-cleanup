@@ -5,13 +5,16 @@ import { SectionDivider } from '@/components/SectionDivider'
 import { ServicesGrid } from '@/components/ServicesGrid'
 import { ServicesShowcase } from '@/components/ServicesShowcase'
 import { GoogleReviews } from '@/components/GoogleReviews'
-import { FAQ } from '@/components/FAQ'
+import { FAQSection } from '@/components/FAQSection'
 import { MapSection } from '@/components/MapSection'
+import { getSiteSettings } from '@/lib/sanity'
 
 // Force dynamic rendering to avoid static generation issues
 export const revalidate = 0
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getSiteSettings()
+
   return (
     <main>
       <HeroSection />
@@ -19,10 +22,16 @@ export default function Home() {
 
       <QuickQuoteBar />
       <SectionDivider />
-      <ServicesGrid />
+      <ServicesGrid
+        services={settings?.homeServices}
+        heading={settings?.servicesHeading}
+        lead={settings?.servicesLead}
+        phone={settings?.sitePhone}
+        phoneHref={settings?.sitePhoneHref}
+      />
       <ServicesShowcase />
       <GoogleReviews />
-      <FAQ />
+      <FAQSection />
       <MapSection />
     </main>
   )

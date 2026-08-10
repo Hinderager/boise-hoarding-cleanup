@@ -1,48 +1,21 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { getSiteSettings } from '@/lib/sanity'
 
-const services = [
-  {
-    title: 'Hoarding Cleanup',
-    description: 'Professional hoarding cleanup with compassion and respect. We understand the emotional challenges involved and work at your pace. Our team carefully sorts through belongings, helps identify valuables and keepsakes, and removes unwanted items. We never throw anything away without your approval.',
-    image: '/generated/hoarding-cleanup.webp',
-    link: 'tel:2089435231',
-    buttonText: 'Call Now',
-  },
-  {
-    title: 'Ongoing Maintenance',
-    description: 'Recovery from hoarding is a journey, not a one-time event. We offer ongoing maintenance visits to help you stay on track. Whether it\'s weekly, monthly, or as-needed check-ins, we\'ll help prevent re-accumulation and keep your space comfortable and safe.',
-    image: '/generated/ongoing-maintenance.webp',
-    link: 'tel:2089435231',
-    buttonText: 'Call Now',
-  },
-  {
-    title: 'No Job Too Large',
-    description: 'There\'s no job too large for us to handle. From overwhelming cleanouts to full property removals, our team is prepared to manage even the most challenging situations. No matter the size, we work efficiently and respectfully to help restore the space.',
-    image: '/generated/deep-cleaning.webp',
-    link: 'tel:2089435231',
-    buttonText: 'Call Now',
-  },
-  {
-    title: 'Emergency Services',
-    description: 'Facing an eviction, code violation, or urgent deadline? We offer expedited hoarding cleanup services when you need them fast. Same-day and next-day service available for emergency situations. We understand time-sensitive situations and work quickly without sacrificing quality.',
-    image: '/generated/emergency-services.webp',
-    link: 'tel:2089435231',
-    buttonText: 'Call Now',
-  },
-]
+export async function ServicesShowcase() {
+  const settings = await getSiteSettings()
+  const services = settings?.homeShowcase || []
 
-export function ServicesShowcase() {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-dark-blue mb-4 uppercase" style={{textShadow: '2px 2px 3px rgba(0,0,0,0.3), 1px 1px 2px rgba(0,0,0,0.2)'}}>
-            Serving Boise and Surrounding Areas
+            {settings?.showcaseHeading}
           </h2>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-            From Boise to the scenic stretches of the Treasure Valley, we provide compassionate hoarding cleanup and property restoration services!
+            {settings?.showcaseLead}
           </p>
         </div>
 
@@ -96,9 +69,9 @@ export function ServicesShowcase() {
         {/* CTA Buttons */}
         <div className="flex flex-row gap-4 justify-center mt-16">
           <Button asChild size="lg" className="bg-ub-yellow hover:bg-ub-yellow/90 text-black font-bold text-lg px-10 py-6 rounded-lg uppercase border-4 border-ub-yellow">
-            <a href="tel:2089435231">
+            <a href={`tel:${settings?.sitePhoneHref}`}>
               <span className="md:hidden">Call Now</span>
-              <span className="hidden md:inline">(208) 943-5231</span>
+              <span className="hidden md:inline">{settings?.sitePhone}</span>
             </a>
           </Button>
         </div>

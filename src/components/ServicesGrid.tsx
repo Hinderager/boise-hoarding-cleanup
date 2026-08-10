@@ -2,43 +2,26 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Heart, Home, Sparkles, AlertTriangle, Package, Users } from 'lucide-react'
 import { useQuoteForm } from '@/context/QuoteFormContext'
+import { iconFor } from '@/lib/icons'
 
-const services = [
-  {
-    icon: Heart,
-    title: 'Hoarding Cleanup',
-    description: 'We work with you at your pace, treating every item with care. No judgment, just support and understanding throughout the entire process.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Thorough Cleaning',
-    description: 'We go beyond clutter removal with a basic cleanup—sweeping, clearing fridges, and emptying cupboards—helping make the space usable again, even in difficult situations.',
-  },
-  {
-    icon: Package,
-    title: 'Clutter Removal',
-    description: 'We sort, organize, and remove items you no longer need. Donations go to local charities, and we recycle whatever we can.',
-  },
-  {
-    icon: Home,
-    title: 'Compassionate Cleanout',
-    description: "Whether it's for yourself or a loved one, we approach every situation with empathy and respect. Your privacy matters to us.",
-  },
-  {
-    icon: AlertTriangle,
-    title: 'Biohazard Cleaning',
-    description: 'Trained to handle situations involving biohazards, animal waste, or unsanitary conditions. We follow proper safety protocols.',
-  },
-  {
-    icon: Users,
-    title: 'Financing Available',
-    description: "We offer flexible financing options to help make our services more affordable. Our team is happy to explain available options so cost doesn't become an added burden.",
-  },
-]
-
-export function ServicesGrid() {
+/**
+ * Client component (it reacts to the quote form expanding), so its content is
+ * passed in from the home page, which reads it from Sanity.
+ */
+export function ServicesGrid({
+  services = [],
+  heading,
+  lead,
+  phone,
+  phoneHref,
+}: {
+  services?: { _key: string; icon: string; title: string; description: string }[]
+  heading?: string
+  lead?: string
+  phone?: string
+  phoneHref?: string
+}) {
   const { mobileFormExpanded, desktopFormExpanded } = useQuoteForm()
 
   return (
@@ -67,19 +50,19 @@ export function ServicesGrid() {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-dark-blue mb-4 uppercase" style={{textShadow: '2px 2px 3px rgba(0,0,0,0.3), 1px 1px 2px rgba(0,0,0,0.2)'}}>
-            Our Services
+            {heading}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Compassionate hoarding cleanup and support services for the Treasure Valley
+            {lead}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const Icon = service.icon
+          {services.map((service) => {
+            const Icon = iconFor(service.icon)
             return (
               <Card
-                key={index}
+                key={service._key}
                 className="group shadow-2xl hover:shadow-[0_20px_50px_rgba(16,_71,_125,_0.7)] hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-dark-blue flex flex-col"
                 style={{
                   boxShadow: '0 10px 30px rgba(16, 71, 125, 0.3), 0 5px 15px rgba(16, 71, 125, 0.2)'
@@ -106,9 +89,9 @@ export function ServicesGrid() {
         {/* CTA Buttons */}
         <div className="flex flex-row gap-4 justify-center mt-12">
           <Button asChild size="lg" className="bg-ub-yellow hover:bg-ub-yellow/90 text-black font-bold text-lg px-10 py-6 rounded-lg uppercase border-4 border-ub-yellow">
-            <a href="tel:2089435231">
+            <a href={`tel:${phoneHref}`}>
               <span className="md:hidden">Call Now</span>
-              <span className="hidden md:inline">(208) 943-5231</span>
+              <span className="hidden md:inline">{phone}</span>
             </a>
           </Button>
         </div>

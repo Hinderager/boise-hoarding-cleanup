@@ -5,7 +5,7 @@ import { CheckCircle, MapPin, Phone } from 'lucide-react'
 import { HeroSection } from '@/components/HeroSection'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
-import { FAQ } from '@/components/FAQ'
+import { FAQSection } from '@/components/FAQSection'
 import { StructuredData } from '@/components/StructuredData'
 import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
@@ -159,7 +159,7 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
 
       <WhyChooseUs />
       <ServiceProcess />
-      <FAQ />
+      <FAQSection />
 
       {/* Related City Links */}
       {(doc.nearbyCities || []).length > 0 && (

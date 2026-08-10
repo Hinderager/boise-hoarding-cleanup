@@ -2,7 +2,16 @@
 
 import { Star } from 'lucide-react'
 
-export function GoogleReviewsBadge() {
+export function GoogleReviewsBadge({
+  rating = 5,
+  count = 0,
+}: {
+  rating?: number
+  count?: number
+}) {
+  const score = rating.toFixed(1)
+  const reviews = `${count}+ Reviews`
+
   return (
     <div className="absolute -top-8 md:-top-12 lg:-bottom-10 md:lg:-bottom-12 lg:top-auto left-1/2 transform -translate-x-1/2">
       {/* Mobile: Compact badge */}
@@ -20,14 +29,14 @@ export function GoogleReviewsBadge() {
           {/* Rating Content - Compact */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-1">
-              <span className="text-xl font-bold text-[#FFC845]">5.0</span>
+              <span className="text-xl font-bold text-[#FFC845]">{score}</span>
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-3 w-3 fill-[#FFC845] text-[#FFC845]" />
                 ))}
               </div>
             </div>
-            <div className="text-xs font-semibold text-gray-700">392+ Reviews</div>
+            <div className="text-xs font-semibold text-gray-700">{reviews}</div>
           </div>
         </div>
       </div>
@@ -48,7 +57,7 @@ export function GoogleReviewsBadge() {
           <div className="flex flex-col items-start">
             <div className="text-lg font-bold text-gray-900 mb-0.5">Google Rating</div>
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-3xl font-bold text-[#FFC845]">5.0</span>
+              <span className="text-3xl font-bold text-[#FFC845]">{score}</span>
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-[#FFC845] text-[#FFC845]" />
@@ -56,7 +65,7 @@ export function GoogleReviewsBadge() {
               </div>
             </div>
             <div className="text-sm text-gray-900">
-              <span className="font-bold text-base">392+ Reviews</span>
+              <span className="font-bold text-base">{reviews}</span>
             </div>
           </div>
         </div>

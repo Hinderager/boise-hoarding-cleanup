@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import { Facebook, Instagram, Linkedin, MapPin, Phone, Clock } from 'lucide-react'
+import { Fragment } from 'react'
+import { getSiteSettings } from '@/lib/sanity'
 
-export function Footer() {
+export async function Footer() {
+  const settings = await getSiteSettings()
+
   return (
     <footer className="bg-dark-blue text-white">
       {/* Main Footer */}
@@ -11,46 +15,13 @@ export function Footer() {
           <div>
             <h4 className="text-xl font-bold mb-4 text-light-blue">Company</h4>
             <ul className="space-y-2">
-              <li>
-                <Link href="/about-us" className="text-white/80 hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-white/80 hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities-served" className="text-white/80 hover:text-white transition-colors">
-                  Service Areas
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-white/80 hover:text-white transition-colors">
-                  All Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/about-us/understanding-hoarding" className="text-white/80 hover:text-white transition-colors">
-                  About Hoarding
-                </Link>
-              </li>
-              <li>
-                <Link href="/blogs" className="text-white/80 hover:text-white transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources/hoarding-signs" className="text-white/80 hover:text-white transition-colors">
-                  Signs of Hoarding
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources/helping-a-hoarder" className="text-white/80 hover:text-white transition-colors">
-                  How to Help
-                </Link>
-              </li>
+              {(settings?.footerCompany || []).map((item) => (
+                <li key={item._key}>
+                  <Link href={item.href} className="text-white/80 hover:text-white transition-colors">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -58,12 +29,9 @@ export function Footer() {
           <div>
             <h4 className="text-xl font-bold mb-4 text-light-blue">Services</h4>
             <ul className="space-y-2">
-              <li className="text-white/80">Hoarding Cleanup</li>
-              <li className="text-white/80">Thorough Cleaning</li>
-              <li className="text-white/80">Clutter Removal</li>
-              <li className="text-white/80">Compassionate Cleanout</li>
-              <li className="text-white/80">Biohazard Cleaning</li>
-              <li className="text-white/80">Financing Available</li>
+              {(settings?.footerServices || []).map((label) => (
+                <li key={label} className="text-white/80">{label}</li>
+              ))}
             </ul>
           </div>
 
@@ -71,31 +39,13 @@ export function Footer() {
           <div>
             <h4 className="text-xl font-bold mb-4 text-light-blue">Service Areas</h4>
             <ul className="space-y-2">
-              <li>
-                <Link href="/cities-served/boise" className="text-white/80 hover:text-white transition-colors">
-                  Boise
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities-served/meridian" className="text-white/80 hover:text-white transition-colors">
-                  Meridian
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities-served/nampa" className="text-white/80 hover:text-white transition-colors">
-                  Nampa
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities-served/caldwell" className="text-white/80 hover:text-white transition-colors">
-                  Caldwell
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities-served/eagle" className="text-white/80 hover:text-white transition-colors">
-                  Eagle
-                </Link>
-              </li>
+              {(settings?.footerAreas || []).map((item) => (
+                <li key={item._key}>
+                  <Link href={item.href} className="text-white/80 hover:text-white transition-colors">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -107,11 +57,11 @@ export function Footer() {
                 <Phone className="h-5 w-5 text-[#ff6b35] flex-shrink-0 mt-1" />
                 <div>
                   <a
-                    href="tel:2089435231"
+                    href={`tel:${settings?.sitePhoneHref}`}
                     className="text-white/80 hover:text-white transition-colors font-semibold"
                   >
                     <span className="md:hidden">Call Now</span>
-                    <span className="hidden md:inline">(208) 943-5231</span>
+                    <span className="hidden md:inline">{settings?.sitePhone}</span>
                   </a>
                 </div>
               </li>
@@ -119,8 +69,12 @@ export function Footer() {
                 <MapPin className="h-5 w-5 text-[#ff6b35] flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-white/80">
-                    Serving the Treasure Valley<br />
-                    Boise, ID
+                    {(settings?.addressLines || []).map((line, i, all) => (
+                      <Fragment key={line}>
+                        {line}
+                        {i < all.length - 1 ? <br /> : null}
+                      </Fragment>
+                    ))}
                   </p>
                 </div>
               </li>
@@ -128,8 +82,12 @@ export function Footer() {
                 <Clock className="h-5 w-5 text-[#ff6b35] flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-white/80">
-                    Mon-Sat: 8am - 6pm<br />
-                    Emergency: 24/7
+                    {(settings?.hoursLines || []).map((line, i, all) => (
+                      <Fragment key={line}>
+                        {line}
+                        {i < all.length - 1 ? <br /> : null}
+                      </Fragment>
+                    ))}
                   </p>
                 </div>
               </li>
