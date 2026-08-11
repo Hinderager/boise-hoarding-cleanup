@@ -476,6 +476,17 @@ export function getAreaParams() {
   )
 }
 
+/**
+ * The cities this site has a page for, in display order. Feeds `areaServed`
+ * in the business schema, so adding a city page adds it to the schema too.
+ */
+export function getCityNames() {
+  return sanityQuery<string[]>(
+    `*[_type == "location" && clientId == $c && !defined(parentSlug)] | order(name asc).name`,
+    { c: CLIENT_ID }
+  )
+}
+
 export function getCitySlugs() {
   return sanityQuery<string[]>(
     `*[_type == "location" && clientId == $c && !defined(parentSlug)].slug.current`,

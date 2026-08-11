@@ -1,46 +1,49 @@
-import { getSiteSettings } from '@/lib/sanity'
+import { getCityNames, getSiteSettings } from '@/lib/sanity'
 
-// Coordinates for each city
-const cityCoordinates: Record<string, { lat: number; lng: number }> = {
-  'Boise': { lat: 43.6150, lng: -116.2023 },
-  'Meridian': { lat: 43.6121, lng: -116.3915 },
-  'Nampa': { lat: 43.5407, lng: -116.5635 },
-  'Caldwell': { lat: 43.6629, lng: -116.6874 },
-  'Eagle': { lat: 43.6957, lng: -116.3535 },
-}
+/** Where the business actually is. */
+const BOISE = { lat: 43.615, lng: -116.2023 }
 
-export async function StructuredData({ city = 'Boise' }: { city?: string }) {
-  const coords = cityCoordinates[city] || cityCoordinates['Boise']
-  // Opening hours and the rating come from Sanity so the schema Google reads
-  // cannot drift away from what the footer, contact page and map card say —
-  // which is exactly what had happened: five spots, five different answers.
-  const settings = await getSiteSettings()
+/**
+ * One business, described once, on every page.
+ *
+ * Until now the city pages rendered a second copy of this with
+ * `addressLocality` and `geo` set to that city — so the Meridian page told
+ * Google the business is located in Meridian. It is one Boise company serving
+ * the valley, and there is no Meridian address. Cities it covers belong in
+ * `areaServed`, which is what that property is for; claiming an address in
+ * each one invents branches that do not exist.
+ *
+ * Opening hours and the rating come from Sanity so the schema cannot drift
+ * away from what the footer, contact page and map card say — which is exactly
+ * what had happened: five spots, five different answers.
+ */
+export async function StructuredData() {
+  const [settings, cities] = await Promise.all([getSiteSettings(), getCityNames()])
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": `Boise Hoarding Cleanup`,
-    "description": `Professional hoarding cleanup services in ${city}, Idaho. Compassionate, discreet cleanup for hoarder homes. Licensed and insured.`,
+    "description": `Professional hoarding cleanup services in Boise, Idaho. Compassionate, discreet cleanup for hoarder homes. Licensed and insured.`,
     "url": "https://boise-hoarding-cleanup.com",
     "telephone": "+1-208-943-5231",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": city,
+      "addressLocality": "Boise",
       "addressRegion": "ID",
       "addressCountry": "US"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": coords.lat,
-      "longitude": coords.lng
+      "latitude": BOISE.lat,
+      "longitude": BOISE.lng
     },
-    "areaServed": [
-      { "@type": "City", "name": "Boise", "addressRegion": "ID" },
-      { "@type": "City", "name": "Meridian", "addressRegion": "ID" },
-      { "@type": "City", "name": "Nampa", "addressRegion": "ID" },
-      { "@type": "City", "name": "Caldwell", "addressRegion": "ID" },
-      { "@type": "City", "name": "Eagle", "addressRegion": "ID" }
-    ],
+    // Every city with a page, so the two cannot disagree.
+    "areaServed": (cities || []).map((name) => ({
+      "@type": "City",
+      "name": name,
+      "addressRegion": "ID"
+    })),
     "serviceType": [
       "Hoarding Cleanup",
       "Hoarder Cleanout",
@@ -77,7 +80,7 @@ export async function StructuredData({ city = 'Boise' }: { city?: string }) {
       "@type": "State",
       "name": "Idaho"
     },
-    "description": `Professional hoarding cleanup and cleanout services in ${city} and the Treasure Valley. We provide compassionate, discreet hoarding remediation services.`
+    "description": `Professional hoarding cleanup and cleanout services in Boise and the Treasure Valley. We provide compassionate, discreet hoarding remediation services.`
   }
 
   // No FAQPage here. It belongs to whichever page actually shows an FAQ, and

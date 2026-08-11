@@ -6,7 +6,6 @@ import { HeroSection } from '@/components/HeroSection'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { ServiceProcess } from '@/components/ServiceProcess'
 import { FAQSection } from '@/components/FAQSection'
-import { StructuredData } from '@/components/StructuredData'
 import { QuickQuoteBar } from '@/components/QuickQuoteBar'
 import { VisibleBreadcrumb } from '@/components/VisibleBreadcrumb'
 import { getCity, getCitySlugs } from '@/lib/sanity'
@@ -55,7 +54,6 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
 
   return (
     <main>
-      <StructuredData city={doc.name} />
 
       <HeroSection
         city={doc.name}
