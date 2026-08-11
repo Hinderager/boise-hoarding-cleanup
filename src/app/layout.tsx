@@ -133,6 +133,15 @@ export default function RootLayout({
           {children}
           <Footer />
         </QuoteFormProvider>
+        {/* Review Monster chat widget. What it does — form or AI chat, what it
+            knows, and whether it appears at all — is set on the Chat Widget page
+            of the dashboard, so this tag never needs changing. It renders in a
+            shadow root, so it cannot pick up or disturb this site's styles. */}
+        <Script
+          src="https://reviewmonster.com/widget.js"
+          data-client="pmm"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   )
